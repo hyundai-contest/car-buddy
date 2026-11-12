@@ -1,16 +1,45 @@
 # Car Buddy
 
-운전하느라 못 남긴 이야기를 대신 기억해 주는 Pleos Connect(Android Automotive) 버디 앱. 운전자가 아무것도 누르지 않아도 주행 중 생긴 일을 에피소드 카드로 만들고, 도착하면 오늘의 길·에피소드·여정 영수증·시상식을 짧은 상영회로 보여 줍니다. 위치는 차 밖으로 나가지 않고, 카드에는 시·군 단위 지명만 남습니다.
+> **운전하느라 못 남긴 이야기를, 차가 대신 기억해 주는 Pleos Connect 버디 앱.**
 
-- 문서 안내: `docs/README.md`
-- 기획: `docs/PLAN_v14.md`(최신) · 시안: `docs/design/card_mockup.html` · 개선 설계: `docs/NEXT_DESIGN.md` · 구현 명세: `docs/SPEC.md` · 화면·문구: `docs/UX_SPEC.md` · 전체 흐름: `docs/E2E.md`
-- 구현 중 결정한 것: `docs/IMPLEMENTATION_NOTES.md`
-- 에뮬레이터에서 확인한 Pleos SDK 호출: `docs/signals_phase0.md`
-- 영상 촬영 가이드: `docs/VIDEO.md`
+운전자가 아무것도 누르지 않아도 주행 중 생긴 일(정체, 온도 전쟁, 계획에 없던 곳, 뺑뺑이, 소나기 …)을 에피소드 카드로 만들고, 도착하면 오늘의 길·에피소드·여정 영수증·시상식을 짧은 상영회로 보여 줍니다. 위치는 차 밖으로 나가지 않고, 카드에는 시·군 단위 지명만 남습니다.
+
+| 항목 | 내용 |
+| --- | --- |
+| 앱 이름 | Car Buddy (패키지 `ai.carbuddy`, 버전 0.1.0) |
+| 대상 | Pleos Connect(Android Automotive) 차량용 앱 |
+| APK | [`apk/CarBuddy_release.apk`](apk/CarBuddy_release.apk) |
+| 시연 영상 | [`docs/video/CarBuddy_demo.mp4`](docs/video/CarBuddy_demo.mp4) (1분 47초, 에뮬레이터 화면 녹화) |
+| 기획안 | [`docs/PLAN_v14.md`](docs/PLAN_v14.md) |
+| 문서 안내 | [`docs/README.md`](docs/README.md) |
+
+## APK 파일 위치
+
+- 저장소 안: **`apk/CarBuddy_release.apk`** (서명된 릴리스 빌드, 약 27.6 MB)
+- 바로 받기: https://github.com/hyundai-contest/car-buddy/blob/main/apk/CarBuddy_release.apk
+- GitHub Release는 따로 만들지 않았습니다. 최신 APK는 항상 위 경로에 있습니다.
+- SHA-256: `d52c662e7c10c1137a50cc1dc848a529d22798aba944682e554dc6f5ba3b9bd4`
+- 서명 인증서: `CN=Car Buddy, O=Car Buddy, C=KR`
 
 ## 실행 방법
 
-준비물: Android Studio(AGP 9.5, Gradle 9.6, Kotlin 2.4, JDK 17), Pleos Connect 에뮬레이터(`Pleos_Connect_v2.1.0` AVD).
+### 1) 제출 APK로 실행 (소스 빌드 불필요)
+
+1. Pleos Connect 에뮬레이터(`Pleos_Connect_v2.1.0`)를 부팅합니다.
+2. APK를 **user 10**에 설치합니다(에뮬레이터에서 앱 사용자는 10입니다).
+
+   ```bash
+   adb install -r --user 10 apk/CarBuddy_release.apk
+   ```
+
+3. 앱 목록에서 **Car Buddy**를 실행합니다. 첫 실행 화면에서 동의 → 위치·차량 신호 권한 → 버디 이름을 정하면 홈이 열립니다.
+4. 이후에는 앱을 열 필요가 없습니다. 출발하면 알아서 기록하고, 도착하면 상영회를 보여 줍니다.
+
+릴리스 APK에는 개발자 패널(DEV)이 없습니다. 주행 로그 재생으로 전체 흐름(출발 → 휴게소 → 도착 상영회)을 보려면 아래 2)의 디버그 빌드를 설치하세요.
+
+### 2) 소스에서 빌드해 실행 (개발자 패널·주행 로그 재생 포함)
+
+준비물: Android Studio(AGP 9.5, Gradle 9.6, Kotlin 2.4, JDK 17), Pleos Connect 에뮬레이터.
 
 ```bash
 ./gradlew :app:testDebugUnitTest      # 단위 테스트 (165개)
@@ -18,17 +47,48 @@
 ./gradlew :app:assembleRelease        # 서명된 릴리스 APK (keystore.properties 필요)
 ```
 
-에뮬레이터에서 앱은 **user 10**으로 실행됩니다.
-
 ```bash
 adb install -r --user 10 app/build/outputs/apk/debug/app-debug.apk
-adb shell pm grant --user 10 ai.carbuddy android.car.permission.CAR_SPEED
-adb shell pm grant --user 10 ai.carbuddy pleos.car.permission.FUSED_LOCATION
-adb shell pm grant --user 10 ai.carbuddy android.permission.ACCESS_FINE_LOCATION
 adb forward tcp:8088 tcp:8088         # Virtual Console: http://127.0.0.1:8088/
 ```
 
-첫 실행 화면에서 동의와 권한을 받으므로 `pm grant`는 자동화 테스트 때만 필요합니다. 에뮬레이터를 재부팅하면 forward를 다시 설정해야 합니다.
+앱 안에서 보는 순서: 홈 왼쪽 아래 **DEV** → 재생 패널에서 `scenario_a`(서울 → 강릉) 선택 → 60×로 재생. 휴게소에서 다시 벨트를 매면 버디가 "쉬는 동안 지금까지 볼래?"라고 묻고, 도착하면 상영회가 열립니다. 자세한 시연 순서는 [`docs/VIDEO.md`](docs/VIDEO.md).
+
+## 테스트 환경 및 필요한 설정
+
+| 항목 | 값 |
+| --- | --- |
+| 개발·테스트 PC | Windows 11, Android Studio |
+| 빌드 | AGP 9.5, Gradle 9.6, Kotlin 2.4, JDK 17, compileSdk/targetSdk 37, minSdk 28 |
+| 의존 저장소 | Maven Central, Pleos SDK 저장소 `https://nexus-playground.pleos.ai/repository/maven-releases/` (빌드할 때만 필요) |
+| 실행 환경 | Pleos Connect 에뮬레이터, 앱 사용자 **user 10** |
+| 차량 신호 조작 | 에뮬레이터 Virtual Console (`adb forward tcp:8088 tcp:8088` 후 http://127.0.0.1:8088/) |
+| 네트워크 | 필요 없음(서버 통신 없음). 위치·원본 궤적은 차 밖으로 나가지 않습니다 |
+
+필요한 설정과 권한
+
+- 첫 실행 화면에서 동의와 권한을 받습니다. 자동화 테스트나 재설치 때는 직접 줄 수 있습니다.
+
+  ```bash
+  adb shell pm grant --user 10 ai.carbuddy android.car.permission.CAR_SPEED
+  adb shell pm grant --user 10 ai.carbuddy pleos.car.permission.FUSED_LOCATION
+  adb shell pm grant --user 10 ai.carbuddy android.permission.ACCESS_FINE_LOCATION
+  adb shell pm grant --user 10 ai.carbuddy android.permission.POST_NOTIFICATIONS
+  ```
+
+- 에뮬레이터를 재부팅하면 `adb forward`를 다시 설정합니다.
+- TTS 소리를 들으려면 에뮬레이터를 `-no-audio` 없이 띄워야 합니다. 에뮬레이터에는 기본 TTS 엔진이 없어 실제 소리는 확인하지 못했습니다(실차 확인 필요).
+- 에뮬레이터에서만 다른 점: 착석 값이 반대로 와서 앱이 뒤집어 읽고, 콘솔에 운전석 벨트 조작이 없어 벨트·위치 궤적·내비 도착 이벤트는 주행 로그 재생(모의 데이터)으로 시험했습니다. 구분은 [`docs/PLAN_v14.md`](docs/PLAN_v14.md)의 '구현한 부분과 모의 데이터로 대체한 부분', 자세한 값은 [`docs/signals_phase0.md`](docs/signals_phase0.md).
+
+## 개발에 사용한 에뮬레이터와 화면 규격
+
+| 항목 | 값 |
+| --- | --- |
+| 에뮬레이터 | Pleos Connect 에뮬레이터 **v2.1.0** (AVD 이름 `Pleos_Connect_v2.1.0`) |
+| 시스템 이미지 | `android-34` · `pleos_car_emulator` · x86_64 (Android Automotive, API 34) |
+| 화면 | **2560 × 1440 px**, 밀도 160 dpi(1dp = 1px), 가로 화면 |
+| 화면 구성 | 왼쪽 차량 패널 + 오른쪽 앱 창(2창 모드, 앱 창 약 1680 × 1210 px). 1창 모드는 세로(Portrait) 배치로 대응 |
+| 대응 | 모든 화면을 Portrait(창 1개)·Landscape(창 2개) 레이아웃으로 함께 만들었습니다 |
 
 ## 구조
 
