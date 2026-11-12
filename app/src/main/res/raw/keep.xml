@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- CopyBook (ResCopyBook) and episode icons look resources up by name at runtime (getIdentifier),
+     so the release resource shrinker must keep them (found 11/9: release showed raw keys). -->
+<resources xmlns:tools="http://schemas.android.com/tools"
+    tools:keep="@string/*,@drawable/*,@font/*" />

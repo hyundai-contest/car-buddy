@@ -1,0 +1,965 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Car Buddy 에피소드 카드 시안</title>
+<style>
+body{margin:0;padding:32px 24px 80px;background:#EFEBE2;color:#12203A;font-family:'Noto Sans KR','Malgun Gothic',sans-serif}
+h1{font-size:28px;margin:0 0 8px}
+p.lead{margin:0 0 24px;color:#4A5568;font-size:15px;line-height:1.6}
+h2{font-size:17px;margin:40px 0 12px}
+.fit{overflow:hidden;border-radius:12px;box-shadow:0 12px 32px rgba(18,32,58,.2);background:#fff}
+iframe{border:0;display:block;transform-origin:0 0}
+ul{margin:0;padding-left:20px;color:#4A5568;font-size:14px;line-height:1.7}
+</style>
+</head>
+<body>
+<h1>Car Buddy 에피소드 카드 시안</h1>
+<p class="lead">길을 잃은 순간까지, 차가 기억합니다. 기획안 v14 기준(2026-11-12). 원본 캔버스: <a href="https://claude.ai/artifact/Buj2Z1T5WTQ4Ngim6rQWPx">claude.ai/artifact/Buj2Z1T5WTQ4Ngim6rQWPx</a></p>
+<ul><li>중간 상영: 가는 길에 5분 이상 쉬고 운전석 벨트를 다시 매면(다시 탔다는 신호) 버디가 묻고, [보기]를 눌러야 재생. 지금까지의 길 → 이야깃거리 큰 에피소드 2장 → 끝 장, 20초 안쪽. 영수증·시상식은 도착용으로 남김. 여정당 1회, 기어 D면 사라짐.</li><li>상영회·시상식 동안 실내등(앰비언트)과 화면 하단 띠가 장면마다 그 에피소드의 색(Cyan/Blue/Purple/White)으로 바뀜. 오늘의 길·영수증·시상식은 카드 대표 색. 끝나거나 출발하면 원래 설정으로 복원.</li><li>아이콘 규칙: 각 에피소드는 아이콘 + 시각 + 에피소드 이름 라벨을 함께 붙여 색만으로 구분하지 않음. 대상(★)은 밝은 칸.</li><li>동승자 폰 참여(QR·폰 투표·사진)는 별도 서버가 필요해 로드맵. 4번은 로드맵 화면이고 앱에는 &#x27;준비 중&#x27;으로 표시. 9:16 공유 이미지(5·8b)는 PT 범위이며, 연말 결산의 이미지 저장·QR은 구현돼 있음.</li><li>뺑뺑이 궤적 지도는 차 화면 상영회에서만. 공유 이미지에는 시·군 단위 지명, 에피소드 문구, 영수증, 그리고 출발·도착 1km를 자르고 배경 지도 없이 그린 경로 모양만 들어감. 위경도·속도·주차 위치는 들어가지 않음.</li><li>오늘의 길: 선 색은 속도가 아니라 에피소드(정체 회색 점선, 즉흥 시안, 뺑뺑이 앰버, 소나기 블루). 출발·도착 1km를 잘라 집 위치를 가리고 배경 지도 없이 모양만 그림. 231km 경로에서는 1~2km 루프가 점으로 보이므로 뺑뺑이는 확대 원으로 따로 그림.</li><li>Pleos 가이드: 앱은 Portrait(창 1개, 기본)와 Landscape(창 2개) 둘 다 설계해야 함. Portrait에 핵심 기능, Landscape는 확장 정보. 창 크기는 사용자가 바꿀 수 있어 반응형 필수.</li></ul>
+<section><h2>0. 홈 + 도착 알림(N1)</h2><div class="fit" data-w="1440" data-h="720"><iframe title="0. 홈 + 도착 알림(N1)" width="1440" height="720" srcdoc="&lt;!doctype html&gt;
+&lt;html lang=&quot;ko&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;title&gt;홈과 도착 알림&lt;/title&gt;
+
+&lt;/head&gt;
+&lt;body&gt;
+
+
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&amp;display=swap&quot;&gt;
+&lt;style&gt;
+body{margin:0}
+a{color:#5FD4E0}a:hover{color:#A8EEF5}
+.ic{width:56px;height:56px;border-radius:18px;background:#12203A;border:1px solid #24365A;display:flex;align-items:center;justify-content:center}
+.mini{width:200px;flex-shrink:0;background:#12203A;border:1px solid #24365A;border-radius:20px;padding:16px;display:flex;flex-direction:column;gap:8px}
+&lt;/style&gt;
+
+&lt;div style=&quot;width: 1440px; height: 720px; box-sizing: border-box; padding: 32px 40px; background: #0B1528; font-family: &#x27;Noto Sans KR&#x27;, sans-serif; color: #F6F3EC; display: flex; gap: 40px; position: relative; overflow: hidden&quot;&gt;
+
+&lt;div style=&quot;width: 600px; display: flex; flex-direction: column; gap: 20px&quot;&gt;
+&lt;div style=&quot;display: flex; gap: 12px&quot;&gt;
+&lt;span class=&quot;ic&quot; aria-label=&quot;보관함&quot;&gt;&lt;svg width=&quot;24&quot; height=&quot;24&quot; viewBox=&quot;0 0 24 24&quot;&gt;&lt;rect x=&quot;4&quot; y=&quot;5&quot; width=&quot;16&quot; height=&quot;14&quot; rx=&quot;3&quot; fill=&quot;none&quot; stroke=&quot;#B9C4D6&quot; stroke-width=&quot;2&quot;/&gt;&lt;path d=&quot;M4 10 H20&quot; stroke=&quot;#B9C4D6&quot; stroke-width=&quot;2&quot;/&gt;&lt;/svg&gt;&lt;/span&gt;
+&lt;span class=&quot;ic&quot; aria-label=&quot;버디와 도감&quot;&gt;&lt;svg width=&quot;24&quot; height=&quot;24&quot; viewBox=&quot;0 0 24 24&quot;&gt;&lt;ellipse cx=&quot;12&quot; cy=&quot;13&quot; rx=&quot;8&quot; ry=&quot;7&quot; fill=&quot;none&quot; stroke=&quot;#B9C4D6&quot; stroke-width=&quot;2&quot;/&gt;&lt;circle cx=&quot;9.5&quot; cy=&quot;12&quot; r=&quot;1.2&quot; fill=&quot;#B9C4D6&quot;/&gt;&lt;circle cx=&quot;14.5&quot; cy=&quot;12&quot; r=&quot;1.2&quot; fill=&quot;#B9C4D6&quot;/&gt;&lt;/svg&gt;&lt;/span&gt;
+&lt;span class=&quot;ic&quot; aria-label=&quot;설정&quot;&gt;&lt;svg width=&quot;24&quot; height=&quot;24&quot; viewBox=&quot;0 0 24 24&quot;&gt;&lt;circle cx=&quot;12&quot; cy=&quot;12&quot; r=&quot;3.5&quot; fill=&quot;none&quot; stroke=&quot;#B9C4D6&quot; stroke-width=&quot;2&quot;/&gt;&lt;path d=&quot;M12 3 V6 M12 18 V21 M3 12 H6 M18 12 H21 M5.6 5.6 L7.8 7.8 M16.2 16.2 L18.4 18.4 M5.6 18.4 L7.8 16.2 M16.2 7.8 L18.4 5.6&quot; stroke=&quot;#B9C4D6&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot;/&gt;&lt;/svg&gt;&lt;/span&gt;
+&lt;/div&gt;
+&lt;div style=&quot;display: flex; gap: 20px; align-items: flex-end; margin-top: 12px&quot;&gt;
+&lt;svg role=&quot;img&quot; aria-label=&quot;나침반을 든 버디&quot; width=&quot;150&quot; height=&quot;150&quot; viewBox=&quot;0 0 84 84&quot;&gt;&lt;ellipse cx=&quot;42&quot; cy=&quot;48&quot; rx=&quot;32&quot; ry=&quot;30&quot; fill=&quot;#F6F3EC&quot;/&gt;&lt;circle cx=&quot;32&quot; cy=&quot;44&quot; r=&quot;4&quot; fill=&quot;#12203A&quot;/&gt;&lt;circle cx=&quot;52&quot; cy=&quot;44&quot; r=&quot;4&quot; fill=&quot;#12203A&quot;/&gt;&lt;path d=&quot;M36 54 Q42 58 48 54&quot; stroke=&quot;#12203A&quot; stroke-width=&quot;2.5&quot; fill=&quot;none&quot; stroke-linecap=&quot;round&quot;/&gt;&lt;circle cx=&quot;66&quot; cy=&quot;62&quot; r=&quot;11&quot; fill=&quot;#F2A541&quot; stroke=&quot;#12203A&quot; stroke-width=&quot;2&quot;/&gt;&lt;path d=&quot;M66 55 L69 62 L66 69 L63 62 Z&quot; fill=&quot;#12203A&quot;/&gt;&lt;/svg&gt;
+&lt;p style=&quot;margin: 0 0 24px 0; font-size: 22px; line-height: 1.5; background: #F6F3EC; color: #12203A; border-radius: 22px 22px 22px 6px; padding: 16px 20px&quot;&gt;강릉 상영회, 아직 안 봤지?&lt;/p&gt;
+&lt;/div&gt;
+&lt;div style=&quot;background: #12203A; border: 1px solid #24365A; border-radius: 22px; padding: 18px 20px; display: flex; gap: 14px; align-items: center&quot;&gt;
+&lt;span style=&quot;width: 10px; height: 52px; border-radius: 5px; background: #5FD4E0&quot;&gt;&lt;/span&gt;
+&lt;div style=&quot;flex: 1; display: flex; flex-direction: column; gap: 4px&quot;&gt;&lt;span style=&quot;font-size: 14px; color: #B9C4D6&quot;&gt;이어 보기&lt;/span&gt;&lt;span style=&quot;font-size: 20px; font-weight: 700&quot;&gt;바다로 새 버린 주말 · 에피소드 6개&lt;/span&gt;&lt;/div&gt;
+&lt;button style=&quot;height: 56px; padding: 0 22px; border-radius: 18px; border: none; background: #5FD4E0; color: #071019; font-family: &#x27;Noto Sans KR&#x27;, sans-serif; font-size: 18px; font-weight: 700&quot;&gt;보기&lt;/button&gt;
+&lt;/div&gt;
+&lt;div style=&quot;flex: 1&quot;&gt;&lt;/div&gt;
+&lt;button style=&quot;height: 72px; border-radius: 20px; border: 2px solid #3A4F78; background: transparent; color: #F6F3EC; font-family: &#x27;Noto Sans KR&#x27;, sans-serif; font-size: 21px; font-weight: 700&quot;&gt;같이 탈 사람 초대 · 준비 중&lt;/button&gt;
+&lt;/div&gt;
+
+&lt;div style=&quot;flex: 1; display: flex; flex-direction: column; gap: 16px; padding-top: 88px&quot;&gt;
+&lt;span style=&quot;font-size: 16px; font-weight: 700; color: #B9C4D6&quot;&gt;최근 카드&lt;/span&gt;
+&lt;div style=&quot;display: flex; gap: 16px&quot;&gt;
+&lt;div class=&quot;mini&quot; style=&quot;border-top: 5px solid #5FD4E0&quot;&gt;&lt;span style=&quot;font-size: 12px; color: #8C99B0&quot;&gt;11.07 토 · ★ 뺑뺑이&lt;/span&gt;&lt;span style=&quot;font-size: 18px; font-weight: 900; line-height: 1.3&quot;&gt;바다로 새 버린 주말&lt;/span&gt;&lt;span style=&quot;font-size: 13px; color: #B9C4D6&quot;&gt;에피소드 6 · +52분&lt;/span&gt;&lt;/div&gt;
+&lt;div class=&quot;mini&quot; style=&quot;border-top: 5px solid #F6F3EC&quot;&gt;&lt;span style=&quot;font-size: 12px; color: #8C99B0&quot;&gt;11.05 수&lt;/span&gt;&lt;span style=&quot;font-size: 18px; font-weight: 900; line-height: 1.3&quot;&gt;25분을 버틴 수요일&lt;/span&gt;&lt;span style=&quot;font-size: 13px; color: #B9C4D6&quot;&gt;에피소드 1 · 혼자&lt;/span&gt;&lt;/div&gt;
+&lt;div class=&quot;mini&quot; style=&quot;border-top: 5px solid #7FA8F2&quot;&gt;&lt;span style=&quot;font-size: 12px; color: #8C99B0&quot;&gt;11.01 토&lt;/span&gt;&lt;span style=&quot;font-size: 18px; font-weight: 900; line-height: 1.3&quot;&gt;소나기를 뚫고 간 가평&lt;/span&gt;&lt;span style=&quot;font-size: 13px; color: #B9C4D6&quot;&gt;에피소드 3 · 친구 2&lt;/span&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p style=&quot;margin: 8px 0 0; font-size: 14px; color: #8C99B0&quot;&gt;Landscape(창 2개) 홈 · Portrait에서는 최근 카드가 1장으로 줄고 세로로 쌓임&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;div style=&quot;position: absolute; right: 40px; top: 24px; width: 520px; box-sizing: border-box; background: #F6F3EC; color: #12203A; border-radius: 22px; padding: 18px 20px; display: flex; flex-direction: column; gap: 14px; box-shadow: 0 18px 40px rgba(0,0,0,0.45)&quot;&gt;
+&lt;div style=&quot;display: flex; gap: 12px; align-items: center&quot;&gt;
+&lt;span style=&quot;width: 40px; height: 40px; border-radius: 12px; background: #12203A; display: flex; align-items: center; justify-content: center&quot;&gt;&lt;svg width=&quot;26&quot; height=&quot;26&quot; viewBox=&quot;0 0 84 84&quot; aria-label=&quot;Car Buddy 앱 아이콘&quot;&gt;&lt;ellipse cx=&quot;42&quot; cy=&quot;48&quot; rx=&quot;32&quot; ry=&quot;30&quot; fill=&quot;#F6F3EC&quot;/&gt;&lt;circle cx=&quot;32&quot; cy=&quot;44&quot; r=&quot;5&quot; fill=&quot;#12203A&quot;/&gt;&lt;circle cx=&quot;52&quot; cy=&quot;44&quot; r=&quot;5&quot; fill=&quot;#12203A&quot;/&gt;&lt;/svg&gt;&lt;/span&gt;
+&lt;div style=&quot;flex: 1; display: flex; flex-direction: column; gap: 2px&quot;&gt;&lt;span style=&quot;font-size: 13px; color: #4A5568&quot;&gt;Car Buddy · 방금&lt;/span&gt;&lt;span style=&quot;font-size: 18px; font-weight: 900&quot;&gt;도착! 오늘 에피소드 6개&lt;/span&gt;&lt;span style=&quot;font-size: 15px; color: #4A5568&quot;&gt;상영회 보고 갈래요?&lt;/span&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div style=&quot;display: flex; gap: 10px&quot;&gt;
+&lt;button style=&quot;flex: 1; height: 56px; border-radius: 16px; border: none; background: #12203A; color: #F6F3EC; font-family: &#x27;Noto Sans KR&#x27;, sans-serif; font-size: 17px; font-weight: 700&quot;&gt;보기&lt;/button&gt;
+&lt;button style=&quot;flex: 1; height: 56px; border-radius: 16px; border: 2px solid #12203A; background: transparent; color: #12203A; font-family: &#x27;Noto Sans KR&#x27;, sans-serif; font-size: 17px; font-weight: 700&quot;&gt;나중에&lt;/button&gt;
+&lt;/div&gt;
+&lt;span style=&quot;font-size: 12px; color: #4A5568&quot;&gt;N1 · 목적지 도착 + P, 앱이 화면에 없을 때 1회 (System Notification)&lt;/span&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+
+
+&lt;/body&gt;
+&lt;/html&gt;
+"></iframe></div></section>
+<section><h2>1. 에피소드 카드 구성</h2><div class="fit" data-w="1200" data-h="1170"><iframe title="1. 에피소드 카드 구성" width="1200" height="1170" srcdoc="&lt;!doctype html&gt;
+&lt;html lang=&quot;ko&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;title&gt;에피소드 카드 구성&lt;/title&gt;
+
+&lt;/head&gt;
+&lt;body&gt;
+
+
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&amp;display=swap&quot;&gt;
+&lt;style&gt;
+body{margin:0}
+a{color:#3FA7A3}a:hover{color:#2B7F7C}
+.ep{display:flex;gap:12px;align-items:flex-start}
+.ic{width:32px;height:32px;border-radius:10px;background:#24365A;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.tm{font-size:12px;color:#8C99B0;font-variant-numeric:tabular-nums}
+.tx{font-size:15px;line-height:1.45}
+.rc{display:flex;justify-content:space-between;font-size:14px;font-variant-numeric:tabular-nums}
+.k{width:28px;height:28px;border-radius:50%;background:#12203A;color:#F6F3EC;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.h{font-size:17px;font-weight:700}
+.d{font-size:14px;line-height:1.55;color:#4A5568}
+&lt;/style&gt;
+
+&lt;div style=&quot;width: 1200px; height: 1170px; box-sizing: border-box; padding: 56px 64px; background: #EFEBE2; font-family: &#x27;Noto Sans KR&#x27;, sans-serif; color: #12203A; display: flex; gap: 56px&quot;&gt;
+
+&lt;div style=&quot;width: 460px; display: flex; flex-direction: column; gap: 16px&quot;&gt;
+&lt;p style=&quot;margin: 0; font-size: 14px; font-weight: 700; letter-spacing: 2px; color: #8A5A12&quot;&gt;앞면 · 에피소드 카드&lt;/p&gt;
+&lt;div style=&quot;width: 460px; box-sizing: border-box; background: #12203A; border-radius: 28px; padding: 26px; display: flex; flex-direction: column; gap: 16px; color: #F6F3EC; box-shadow: 0 24px 48px rgba(18,32,58,0.25); border-top: 6px solid #5FD4E0&quot;&gt;
+&lt;div style=&quot;display: flex; justify-content: space-between; align-items: center&quot;&gt;
+&lt;span style=&quot;font-size: 13px; color: #B9C4D6&quot;&gt;2026.11.07 토 · 여정 #12&lt;/span&gt;
+&lt;span style=&quot;font-size: 12px; color: #0B1528; background: #5FD4E0; border-radius: 999px; padding: 4px 10px; font-weight: 700&quot;&gt;에피소드 6&lt;/span&gt;
+&lt;/div&gt;
+&lt;div style=&quot;display: flex; gap: 14px; align-items: center&quot;&gt;
+&lt;svg role=&quot;img&quot; aria-label=&quot;나침반을 든 버디&quot; width=&quot;76&quot; height=&quot;76&quot; viewBox=&quot;0 0 84 84&quot;&gt;&lt;ellipse cx=&quot;42&quot; cy=&quot;48&quot; rx=&quot;32&quot; ry=&quot;30&quot; fill=&quot;#F6F3EC&quot;/&gt;&lt;circle cx=&quot;32&quot; cy=&quot;44&quot; r=&quot;4&quot; fill=&quot;#12203A&quot;/&gt;&lt;circle cx=&quot;52&quot; cy=&quot;44&quot; r=&quot;4&quot; fill=&quot;#12203A&quot;/&gt;&lt;path d=&quot;M36 54 Q42 58 48 54&quot; stroke=&quot;#12203A&quot; stroke-width=&quot;2.5&quot; fill=&quot;none&quot; stroke-linecap=&quot;round&quot;/&gt;&lt;circle cx=&quot;66&quot; cy=&quot;62&quot; r=&quot;11&quot; fill=&quot;#F2A541&quot; stroke=&quot;#12203A&quot; stroke-width=&quot;2&quot;/&gt;&lt;path d=&quot;M66 55 L69 62 L66 69 L63 62 Z&quot; fill=&quot;#12203A&quot;/&gt;&lt;/svg&gt;
+&lt;div style=&quot;display: flex; flex-direction: column; gap: 6px&quot;&gt;
+&lt;h2 style=&quot;margin: 0; font-size: 28px; font-weight: 900; line-height: 1.2&quot;&gt;바다로 새 버린 주말&lt;/h2&gt;
+&lt;span style=&quot;font-size: 14px; color: #B9C4D6&quot;&gt;서울 마포구 → 강원 강릉시 · 231km · 4시간 2분&lt;/span&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div style=&quot;display: flex; flex-direction: column; gap: 12px; background: #1B2D4F; border-radius: 18px; padding: 16px&quot;&gt;
+&lt;div class=&quot;ep&quot;&gt;&lt;span class=&quot;ic&quot;&gt;&lt;svg width=&quot;18&quot; height=&quot;18&quot; viewBox=&quot;0 0 20 20&quot; aria-hidden=&quot;true&quot;&gt;&lt;rect x=&quot;2&quot; y=&quot;8&quot; width=&quot;7&quot; height=&quot;5&quot; rx=&quot;1.5&quot; fill=&quot;#B9C4D6&quot;/&gt;&lt;rect x=&quot;11&quot; y=&quot;8&quot; width=&quot;7&quot; height=&quot;5&quot; rx=&quot;1.5&quot; fill=&quot;#B9C4D6&quot;/&gt;&lt;/svg&gt;&lt;/span&gt;&lt;div&gt;&lt;div class=&quot;tm&quot;&gt;10:40 · 정체&lt;/div&gt;&lt;div class=&quot;tx&quot;&gt;35분 거북이. 다 같이 버팀.&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;div class=&quot;ep&quot;&gt;&lt;span class=&quot;ic&quot;&gt;&lt;svg width=&quot;18&quot; height=&quot;18&quot; viewBox=&quot;0 0 20 20&quot; aria-hidden=&quot;true&quot;&gt;&lt;rect x=&quot;8&quot; y=&quot;2&quot; width=&quot;4&quot; height=&quot;11&quot; rx=&quot;2&quot; fill=&quot;none&quot; stroke=&quot;#F28B6B&quot; stroke-width=&quot;2&quot;/&gt;&lt;circle cx=&quot;10&quot; cy=&quot;15&quot; r=&quot;3.2&quot; fill=&quot;#F28B6B&quot;/&gt;&lt;/svg&gt;&lt;/span&gt;&lt;div&gt;&lt;div class=&quot;tm&quot;&gt;10:52 · 온도 전쟁&lt;/div&gt;&lt;div class=&quot;tx&quot;&gt;운전석 19도 vs 조수석 26도.&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;div class=&quot;ep&quot;&gt;&lt;span class=&quot;ic&quot;&gt;&lt;svg width=&quot;18&quot; height=&quot;18&quot; viewBox=&quot;0 0 20 20&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M5 9 H13 V13 Q13 16 10 16 H8 Q5 16 5 13 Z M13 10 H15 Q16.5 10 16.5 11.5 Q16.5 13 15 13 H13&quot; fill=&quot;none&quot; stroke=&quot;#B9C4D6&quot; stroke-width=&quot;2&quot; stroke-linejoin=&quot;round&quot;/&gt;&lt;path d=&quot;M8 3 V6 M11 3 V6&quot; stroke=&quot;#B9C4D6&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot;/&gt;&lt;/svg&gt;&lt;/span&gt;&lt;div&gt;&lt;div class=&quot;tm&quot;&gt;11:35 · 휴게소&lt;/div&gt;&lt;div class=&quot;tx&quot;&gt;휴게소 1번, 합쳐서 22분.&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;div class=&quot;ep&quot;&gt;&lt;span class=&quot;ic&quot;&gt;&lt;svg width=&quot;18&quot; height=&quot;18&quot; viewBox=&quot;0 0 20 20&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M4 18 V10 Q4 5 9 5 H15&quot; stroke=&quot;#5FD4E0&quot; stroke-width=&quot;2.4&quot; fill=&quot;none&quot; stroke-linecap=&quot;round&quot;/&gt;&lt;path d=&quot;M12 2 L16 5 L12 8&quot; stroke=&quot;#5FD4E0&quot; stroke-width=&quot;2.4&quot; fill=&quot;none&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;/&gt;&lt;/svg&gt;&lt;/span&gt;&lt;div&gt;&lt;div class=&quot;tm&quot;&gt;12:31 · 계획에 없던 곳&lt;/div&gt;&lt;div class=&quot;tx&quot;&gt;원래 카페였는데, 안목해변으로 새 버렸어요.&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;div class=&quot;ep&quot; style=&quot;background: #F6F3EC; color: #12203A; border-radius: 12px; padding: 8px 10px; margin: 0 -6px&quot;&gt;&lt;span class=&quot;ic&quot; style=&quot;background: #12203A&quot;&gt;&lt;svg width=&quot;18&quot; height=&quot;18&quot; viewBox=&quot;0 0 20 20&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M15.5 6.5 A6 6 0 1 0 16 11&quot; stroke=&quot;#F2A541&quot; stroke-width=&quot;2.4&quot; fill=&quot;none&quot; stroke-linecap=&quot;round&quot;/&gt;&lt;path d=&quot;M12.5 5.5 L16 6.5 L16.5 3&quot; stroke=&quot;#F2A541&quot; stroke-width=&quot;2.4&quot; fill=&quot;none&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;/&gt;&lt;/svg&gt;&lt;/span&gt;&lt;div style=&quot;flex: 1&quot;&gt;&lt;div class=&quot;tm&quot; style=&quot;color: #4A5568&quot;&gt;12:58 · 뺑뺑이 · &lt;b style=&quot;color: #8A5A12&quot;&gt;★ 오늘의 순간&lt;/b&gt;&lt;/div&gt;&lt;div class=&quot;tx&quot; style=&quot;font-weight: 700&quot;&gt;같은 길을 3번 돌았어. 나도 어지러웠어.&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;div class=&quot;ep&quot;&gt;&lt;span class=&quot;ic&quot;&gt;&lt;svg width=&quot;18&quot; height=&quot;18&quot; viewBox=&quot;0 0 20 20&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M6 3 L4 9 M11 3 L9 9 M16 3 L14 9 M8 11 L6 17 M13 11 L11 17&quot; stroke=&quot;#7FA8F2&quot; stroke-width=&quot;2.2&quot; stroke-linecap=&quot;round&quot;/&gt;&lt;/svg&gt;&lt;/span&gt;&lt;div&gt;&lt;div class=&quot;tm&quot;&gt;13:22 · 소나기&lt;/div&gt;&lt;div class=&quot;tx&quot;&gt;와이퍼 최고속 7분. 그치자마자 창문 열었어.&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div style=&quot;background: #F6F3EC; color: #12203A; border-radius: 14px; padding: 14px 16px; display: flex; flex-direction: column; gap: 6px; border: 2px dashed #B9B2A3&quot;&gt;
+&lt;div style=&quot;display: flex; justify-content: space-between; align-items: baseline&quot;&gt;&lt;span style=&quot;font-size: 13px; font-weight: 900; letter-spacing: 1px&quot;&gt;여정 영수증&lt;/span&gt;&lt;span style=&quot;font-size: 12px; font-weight: 900; letter-spacing: 2px; color: #A8620A; border: 2px double #A8620A; border-radius: 10px; padding: 1px 7px; transform: rotate(-8deg); display: inline-block; opacity: 0.9&quot;&gt;지각&lt;/span&gt;&lt;/div&gt;
+&lt;div style=&quot;font-size: 12px; color: #4A5568; font-variant-numeric: tabular-nums&quot;&gt;예정 13:10 → 도착 14:02 · 231km · 쉰 시간 22분 · 4명&lt;/div&gt;
+&lt;div class=&quot;rc&quot;&gt;&lt;span&gt;정체&lt;/span&gt;&lt;span&gt;+35분&lt;/span&gt;&lt;/div&gt;
+&lt;div class=&quot;rc&quot;&gt;&lt;span&gt;휴게소&lt;/span&gt;&lt;span&gt;+22분&lt;/span&gt;&lt;/div&gt;
+&lt;div class=&quot;rc&quot;&gt;&lt;span&gt;즉흥 바다&lt;/span&gt;&lt;span&gt;+18분&lt;/span&gt;&lt;/div&gt;
+&lt;div class=&quot;rc&quot;&gt;&lt;span&gt;뺑뺑이&lt;/span&gt;&lt;span&gt;+7분&lt;/span&gt;&lt;/div&gt;
+&lt;div class=&quot;rc&quot; style=&quot;color: #4A5568&quot;&gt;&lt;span&gt;덜 막힌 구간&lt;/span&gt;&lt;span&gt;−30분&lt;/span&gt;&lt;/div&gt;
+&lt;div class=&quot;rc&quot; style=&quot;border-top: 1px solid #12203A; padding-top: 6px; font-weight: 900; font-size: 16px&quot;&gt;&lt;span&gt;예정보다 늦게&lt;/span&gt;&lt;span&gt;+52분&lt;/span&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div style=&quot;display: flex; gap: 8px; flex-wrap: wrap&quot;&gt;
+&lt;span style=&quot;font-size: 13px; font-weight: 700; color: #12203A; background: #F2A541; border-radius: 999px; padding: 5px 12px&quot;&gt;★ 길치상&lt;/span&gt;
+&lt;span style=&quot;font-size: 13px; font-weight: 700; color: #12203A; background: #F6F3EC; border-radius: 999px; padding: 5px 12px&quot;&gt;온도전쟁상&lt;/span&gt;
+&lt;span style=&quot;font-size: 13px; font-weight: 700; color: #12203A; background: #F6F3EC; border-radius: 999px; padding: 5px 12px&quot;&gt;우중 드라이버상&lt;/span&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p style=&quot;margin: 0; font-size: 14px; font-weight: 700; letter-spacing: 2px; color: #8A5A12&quot;&gt;내릴 때 · 버디의 배웅&lt;/p&gt;
+&lt;div style=&quot;width: 460px; box-sizing: border-box; background: #F6F3EC; border: 1px solid #D8D1C2; border-radius: 22px; padding: 16px; display: flex; flex-direction: column; gap: 10px&quot;&gt;
+&lt;div style=&quot;display: flex; gap: 10px; align-items: flex-end&quot;&gt;&lt;svg role=&quot;img&quot; aria-label=&quot;버디&quot; width=&quot;48&quot; height=&quot;48&quot; viewBox=&quot;0 0 84 84&quot; style=&quot;flex-shrink: 0&quot;&gt;&lt;ellipse cx=&quot;42&quot; cy=&quot;48&quot; rx=&quot;32&quot; ry=&quot;30&quot; fill=&quot;#12203A&quot;/&gt;&lt;circle cx=&quot;32&quot; cy=&quot;44&quot; r=&quot;4&quot; fill=&quot;#F6F3EC&quot;/&gt;&lt;circle cx=&quot;52&quot; cy=&quot;44&quot; r=&quot;4&quot; fill=&quot;#F6F3EC&quot;/&gt;&lt;path d=&quot;M36 54 Q42 58 48 54&quot; stroke=&quot;#F6F3EC&quot; stroke-width=&quot;2.5&quot; fill=&quot;none&quot; stroke-linecap=&quot;round&quot;/&gt;&lt;/svg&gt;&lt;p style=&quot;margin: 0 0 4px; font-size: 15px; line-height: 1.5; background: #12203A; color: #F6F3EC; border-radius: 16px 16px 16px 4px; padding: 10px 14px&quot;&gt;카페 대신 바다, 카드로 만들어 둘게. 조수석 창문 열려 있어. 닫아 줄까?&lt;/p&gt;&lt;/div&gt;
+&lt;div style=&quot;display: flex; gap: 10px; align-items: center&quot;&gt;
+&lt;button style=&quot;height: 48px; padding: 0 18px; border-radius: 14px; border: none; background: #12203A; color: #F6F3EC; font-family: &#x27;Noto Sans KR&#x27;, sans-serif; font-size: 15px; font-weight: 700&quot;&gt;조수석 창문 닫기&lt;/button&gt;&lt;span style=&quot;font-size: 12px; color: #4A5568&quot;&gt;오늘 이야기 한 줄 → 챙길 것 하나&lt;/span&gt;
+&lt;/div&gt;
+&lt;span style=&quot;font-size: 12px; line-height: 1.5; color: #4A5568&quot;&gt;소리는 챙길 것이 있을 때만 납니다. 매일 다니는 길에서 챙길 것이 없으면 아무 말도 하지 않고, 점검 목록 화면은 만들지 않습니다.&lt;/span&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div style=&quot;flex: 1; display: flex; flex-direction: column; gap: 20px; padding-top: 4px&quot;&gt;
+&lt;h1 style=&quot;margin: 0; font-size: 34px; font-weight: 900; line-height: 1.3&quot;&gt;카드의 주인공은 &#x27;그날 있었던 일&#x27;&lt;/h1&gt;
+&lt;p style=&quot;margin: 0; font-size: 16px; line-height: 1.6; color: #4A5568&quot;&gt;풍경 사진 대신, 차가 포착한 사건이 카드를 채웁니다. 내비 이벤트와 차량 신호에서만 나오는 이야기라 폰 앱은 만들 수 없는 카드입니다.&lt;/p&gt;
+&lt;div style=&quot;display: flex; flex-direction: column; gap: 16px&quot;&gt;
+&lt;div style=&quot;display: flex; gap: 14px&quot;&gt;&lt;span class=&quot;k&quot;&gt;1&lt;/span&gt;&lt;div style=&quot;display: flex; flex-direction: column; gap: 4px&quot;&gt;&lt;span class=&quot;h&quot;&gt;제목 = 최고점 에피소드&lt;/span&gt;&lt;span class=&quot;d&quot;&gt;이야깃거리 점수 × 희소성으로 고릅니다. &quot;바다로 새 버린 주말&quot;은 목적지 변경(onDestinationChanged)에서 나왔습니다.&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;div style=&quot;display: flex; gap: 14px&quot;&gt;&lt;span class=&quot;k&quot;&gt;2&lt;/span&gt;&lt;div style=&quot;display: flex; flex-direction: column; gap: 4px&quot;&gt;&lt;span class=&quot;h&quot;&gt;에피소드 타임라인&lt;/span&gt;&lt;span class=&quot;d&quot;&gt;3~6개 사건을 시간순으로. 정체(차속), 온도 전쟁(좌석별 목표 온도), 계획에 없던 곳(목적지 변경), 뺑뺑이(재탐색 + GPS 궤적), 소나기(와이퍼 Off→High). 문구는 버디가 &#x27;우리&#x27; 1인칭으로.&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;div style=&quot;display: flex; gap: 14px&quot;&gt;&lt;span class=&quot;k&quot; style=&quot;background: #F2A541; color: #12203A&quot;&gt;★&lt;/span&gt;&lt;div style=&quot;display: flex; flex-direction: column; gap: 4px&quot;&gt;&lt;span class=&quot;h&quot;&gt;오늘의 순간&lt;/span&gt;&lt;span class=&quot;d&quot;&gt;시상식의 대상 에피소드. 지금은 버디가 이야깃거리가 가장 큰 것을 고르고, PT에서는 차 화면을 눌러 함께 고릅니다. 밝은 칸으로 강조합니다.&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;div style=&quot;display: flex; gap: 14px&quot;&gt;&lt;span class=&quot;k&quot;&gt;3&lt;/span&gt;&lt;div style=&quot;display: flex; flex-direction: column; gap: 4px&quot;&gt;&lt;span class=&quot;h&quot;&gt;여정 영수증&lt;/span&gt;&lt;span class=&quot;d&quot;&gt;위쪽 여정 내역은 항상 같고, 아래 시간 정산과 도장만 결과에 따라 바뀝니다. 출발 때 첫 예정 시각과 비교해 ±5분이면 [정시 도착], 늦으면 [지각](에피소드별 내역), 일찍이면 [일찍 도착](덜 막힌 구간). 결과별 시안은 7번.&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;div style=&quot;display: flex; gap: 14px&quot;&gt;&lt;span class=&quot;k&quot;&gt;4&lt;/span&gt;&lt;div style=&quot;display: flex; flex-direction: column; gap: 4px&quot;&gt;&lt;span class=&quot;h&quot;&gt;시상식 결과&lt;/span&gt;&lt;span class=&quot;d&quot;&gt;에피소드에서 상 2~3개. 놀림이 되지 않도록 상 이름에서만 장난스럽게 말하고, 운전 평가 수치는 넣지 않습니다.&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;div style=&quot;display: flex; gap: 14px&quot;&gt;&lt;span class=&quot;k&quot; style=&quot;background: #F6F3EC; color: #12203A; border: 2px solid #12203A; box-sizing: border-box&quot;&gt;+&lt;/span&gt;&lt;div style=&quot;display: flex; flex-direction: column; gap: 4px&quot;&gt;&lt;span class=&quot;h&quot;&gt;운전자가 남긴 순간과 배웅&lt;/span&gt;&lt;span class=&quot;d&quot;&gt;운전자가 [지금 기억해]로 남긴 순간이 카드에 따로 표시됩니다. 벨트를 풀면 버디가 오늘 이야기 한 줄과 함께 열린 창문·트렁크·전조등을 하나만 챙깁니다. 동승자 폰 참여(사진·폰 투표)는 서버가 필요해 로드맵입니다.&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+
+
+&lt;/body&gt;
+&lt;/html&gt;
+"></iframe></div></section>
+<section><h2>2. 도착 상영회: 에피소드 한 장씩</h2><div class="fit" data-w="1440" data-h="720"><iframe title="2. 도착 상영회: 에피소드 한 장씩" width="1440" height="720" srcdoc="&lt;!doctype html&gt;
+&lt;html lang=&quot;ko&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;title&gt;도착 상영회&lt;/title&gt;
+
+&lt;/head&gt;
+&lt;body&gt;
+
+
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&amp;display=swap&quot;&gt;
+&lt;style&gt;
+body{margin:0}
+a{color:#5FD4E0}a:hover{color:#A8EEF5}
+.sc{display:flex;flex-direction:column;align-items:center;gap:6px;flex:1;min-width:0}
+.dot{width:22px;height:22px;border-radius:50%;box-sizing:border-box}
+.lb{font-size:12px;color:#8C99B0;white-space:nowrap}
+&lt;/style&gt;
+
+&lt;div style=&quot;width: 1440px; height: 720px; box-sizing: border-box; position: relative; overflow: hidden; background: #071019; font-family: &#x27;Noto Sans KR&#x27;, sans-serif; color: #F6F3EC&quot;&gt;
+
+&lt;div style=&quot;position: absolute; left: 0; bottom: 0; width: 1440px; height: 6px; background: #F6F3EC; box-shadow: 0 0 40px 10px rgba(246,243,236,0.45)&quot;&gt;&lt;/div&gt;
+
+&lt;div style=&quot;position: absolute; left: 48px; top: 36px; right: 48px; display: flex; justify-content: space-between; align-items: center&quot;&gt;
+&lt;div style=&quot;display: flex; gap: 14px; align-items: center&quot;&gt;
+&lt;span style=&quot;font-size: 15px; font-weight: 700; color: #071019; background: #5FD4E0; border-radius: 999px; padding: 6px 14px&quot;&gt;도착 상영회&lt;/span&gt;
+&lt;span style=&quot;font-size: 16px; color: #B9C4D6&quot;&gt;에피소드 5 / 6&lt;/span&gt;
+&lt;/div&gt;
+&lt;div style=&quot;display: flex; gap: 8px&quot;&gt;
+&lt;span style=&quot;width: 36px; height: 6px; border-radius: 3px; background: #F6F3EC&quot; title=&quot;오늘의 길&quot;&gt;&lt;/span&gt;
+&lt;span style=&quot;width: 36px; height: 6px; border-radius: 3px; background: #F6F3EC&quot;&gt;&lt;/span&gt;
+&lt;span style=&quot;width: 36px; height: 6px; border-radius: 3px; background: #F6F3EC&quot;&gt;&lt;/span&gt;
+&lt;span style=&quot;width: 36px; height: 6px; border-radius: 3px; background: #F6F3EC&quot;&gt;&lt;/span&gt;
+&lt;span style=&quot;width: 36px; height: 6px; border-radius: 3px; background: #F6F3EC&quot;&gt;&lt;/span&gt;
+&lt;span style=&quot;width: 36px; height: 6px; border-radius: 3px; background: linear-gradient(90deg, #F6F3EC 55%, rgba(246,243,236,0.25) 55%)&quot;&gt;&lt;/span&gt;
+&lt;span style=&quot;width: 36px; height: 6px; border-radius: 3px; background: rgba(246,243,236,0.25)&quot;&gt;&lt;/span&gt;
+&lt;span style=&quot;width: 36px; height: 6px; border-radius: 3px; background: rgba(246,243,236,0.25)&quot; title=&quot;영수증&quot;&gt;&lt;/span&gt;
+&lt;span style=&quot;width: 36px; height: 6px; border-radius: 3px; background: rgba(246,243,236,0.25)&quot; title=&quot;시상식&quot;&gt;&lt;/span&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div style=&quot;position: absolute; left: 48px; top: 96px; width: 760px; height: 520px; border-radius: 28px; background: #0E1C2E; border: 1px solid #24365A; overflow: hidden&quot;&gt;
+&lt;svg role=&quot;img&quot; aria-label=&quot;같은 사거리를 세 번 돈 궤적&quot; width=&quot;760&quot; height=&quot;520&quot; viewBox=&quot;0 0 760 520&quot;&gt;
+&lt;g stroke=&quot;#1E3350&quot; stroke-width=&quot;18&quot; fill=&quot;none&quot; stroke-linecap=&quot;round&quot;&gt;&lt;path d=&quot;M0 300 H760&quot;/&gt;&lt;path d=&quot;M380 0 V520&quot;/&gt;&lt;path d=&quot;M120 0 L260 520&quot;/&gt;&lt;path d=&quot;M560 0 L640 520&quot;/&gt;&lt;/g&gt;
+&lt;path d=&quot;M40 300 H330 Q380 300 380 250 V170 Q380 120 430 120 H520 Q570 120 570 170 V250 Q570 300 520 300 H430 Q380 300 380 350 V400 Q380 440 340 440 H300 Q260 440 260 400 V340 Q260 300 300 300 H430 Q470 300 470 260 V200 Q470 170 440 170 H420 Q380 170 380 210 V300 H720&quot; stroke=&quot;#F2A541&quot; stroke-width=&quot;6&quot; fill=&quot;none&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;/&gt;
+&lt;circle cx=&quot;380&quot; cy=&quot;300&quot; r=&quot;22&quot; fill=&quot;none&quot; stroke=&quot;#F6F3EC&quot; stroke-width=&quot;3&quot; stroke-dasharray=&quot;6 6&quot;/&gt;
+&lt;text x=&quot;404&quot; y=&quot;336&quot; fill=&quot;#F6F3EC&quot; font-size=&quot;16&quot; font-family=&quot;Noto Sans KR&quot;&gt;같은 사거리 3회 통과&lt;/text&gt;
+&lt;circle cx=&quot;40&quot; cy=&quot;300&quot; r=&quot;8&quot; fill=&quot;#5FD4E0&quot;/&gt;&lt;circle cx=&quot;720&quot; cy=&quot;300&quot; r=&quot;8&quot; fill=&quot;#5FD4E0&quot;/&gt;
+&lt;/svg&gt;
+&lt;span style=&quot;position: absolute; left: 24px; top: 22px; font-size: 13px; color: #8C99B0&quot;&gt;궤적은 상영회에서만 보여 주고, 공유 카드에는 넣지 않습니다&lt;/span&gt;
+&lt;/div&gt;
+
+&lt;div style=&quot;position: absolute; left: 848px; top: 96px; width: 544px; height: 520px; display: flex; flex-direction: column; gap: 22px&quot;&gt;
+&lt;div style=&quot;display: flex; flex-direction: column; gap: 8px&quot;&gt;
+&lt;span style=&quot;font-size: 18px; color: #F2A541; font-weight: 700&quot;&gt;12:58 · 뺑뺑이&lt;/span&gt;
+&lt;h2 style=&quot;margin: 0; font-size: 42px; font-weight: 900; line-height: 1.22&quot;&gt;같은 길을 3번 돌았어.&lt;br&gt;나도 어지러웠어.&lt;/h2&gt;
+&lt;/div&gt;
+&lt;div style=&quot;display: flex; gap: 12px; align-items: flex-end&quot;&gt;
+&lt;svg role=&quot;img&quot; aria-label=&quot;어지러운 버디&quot; width=&quot;64&quot; height=&quot;64&quot; viewBox=&quot;0 0 84 84&quot;&gt;&lt;ellipse cx=&quot;42&quot; cy=&quot;48&quot; rx=&quot;32&quot; ry=&quot;30&quot; fill=&quot;#F6F3EC&quot;/&gt;&lt;path d=&quot;M28 40 L36 46 M36 40 L28 46 M48 40 L56 46 M56 40 L48 46&quot; stroke=&quot;#12203A&quot; stroke-width=&quot;3&quot; stroke-linecap=&quot;round&quot;/&gt;&lt;path d=&quot;M36 56 Q42 52 48 56&quot; stroke=&quot;#12203A&quot; stroke-width=&quot;2.5&quot; fill=&quot;none&quot; stroke-linecap=&quot;round&quot;/&gt;&lt;/svg&gt;
+&lt;p style=&quot;margin: 0 0 6px 0; font-size: 18px; line-height: 1.5; background: #F6F3EC; color: #12203A; border-radius: 18px 18px 18px 4px; padding: 12px 16px&quot;&gt;그래도 덕분에 같은 풍경 세 번 봤잖아.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div style=&quot;display: flex; flex-direction: column; gap: 12px; background: #12203A; border: 1px solid #24365A; border-radius: 20px; padding: 16px 18px&quot;&gt;
+&lt;span style=&quot;font-size: 14px; font-weight: 700; color: #B9C4D6&quot;&gt;실내등은 장면마다 그 에피소드의 색으로&lt;/span&gt;
+&lt;div style=&quot;display: flex; gap: 4px; align-items: flex-start&quot;&gt;
+&lt;div class=&quot;sc&quot;&gt;&lt;span class=&quot;dot&quot; style=&quot;background: #5FD4E0&quot;&gt;&lt;/span&gt;&lt;span class=&quot;lb&quot;&gt;오늘의 길&lt;/span&gt;&lt;/div&gt;
+&lt;div class=&quot;sc&quot;&gt;&lt;span class=&quot;dot&quot; style=&quot;background: #F6F3EC&quot;&gt;&lt;/span&gt;&lt;span class=&quot;lb&quot;&gt;정체&lt;/span&gt;&lt;/div&gt;
+&lt;div class=&quot;sc&quot;&gt;&lt;span class=&quot;dot&quot; style=&quot;background: #F6F3EC&quot;&gt;&lt;/span&gt;&lt;span class=&quot;lb&quot;&gt;온도&lt;/span&gt;&lt;/div&gt;
+&lt;div class=&quot;sc&quot;&gt;&lt;span class=&quot;dot&quot; style=&quot;background: #F6F3EC&quot;&gt;&lt;/span&gt;&lt;span class=&quot;lb&quot;&gt;휴게소&lt;/span&gt;&lt;/div&gt;
+&lt;div class=&quot;sc&quot;&gt;&lt;span class=&quot;dot&quot; style=&quot;background: #5FD4E0&quot;&gt;&lt;/span&gt;&lt;span class=&quot;lb&quot;&gt;즉흥 바다&lt;/span&gt;&lt;/div&gt;
+&lt;div class=&quot;sc&quot;&gt;&lt;span class=&quot;dot&quot; style=&quot;background: #F6F3EC; box-shadow: 0 0 0 3px #12203A, 0 0 0 5px #F2A541&quot;&gt;&lt;/span&gt;&lt;span class=&quot;lb&quot; style=&quot;color: #F6F3EC; font-weight: 700&quot;&gt;뺑뺑이&lt;/span&gt;&lt;/div&gt;
+&lt;div class=&quot;sc&quot;&gt;&lt;span class=&quot;dot&quot; style=&quot;background: #2979FF&quot;&gt;&lt;/span&gt;&lt;span class=&quot;lb&quot;&gt;소나기&lt;/span&gt;&lt;/div&gt;
+&lt;div class=&quot;sc&quot;&gt;&lt;span class=&quot;dot&quot; style=&quot;background: #5FD4E0&quot;&gt;&lt;/span&gt;&lt;span class=&quot;lb&quot;&gt;영수증&lt;/span&gt;&lt;/div&gt;
+&lt;div class=&quot;sc&quot;&gt;&lt;span class=&quot;dot&quot; style=&quot;background: #5FD4E0&quot;&gt;&lt;/span&gt;&lt;span class=&quot;lb&quot;&gt;시상식&lt;/span&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div style=&quot;flex: 1&quot;&gt;&lt;/div&gt;
+&lt;div style=&quot;display: flex; gap: 12px&quot;&gt;
+&lt;button style=&quot;height: 60px; flex: 1; border-radius: 18px; border: 2px solid #3A4F78; background: transparent; color: #F6F3EC; font-family: &#x27;Noto Sans KR&#x27;, sans-serif; font-size: 19px; font-weight: 700&quot;&gt;이 에피소드 숨기기&lt;/button&gt;
+&lt;button style=&quot;height: 60px; flex: 1; border-radius: 18px; border: none; background: #5FD4E0; color: #071019; font-family: &#x27;Noto Sans KR&#x27;, sans-serif; font-size: 19px; font-weight: 700&quot;&gt;다음 · 소나기&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p style=&quot;position: absolute; left: 48px; bottom: 24px; margin: 0; font-size: 15px; color: #8C99B0&quot;&gt;P에서만 재생 · 다음: 소나기 → 여정 영수증 → 시상식 · 이 장면의 실내등은 White, 끝나거나 출발하면 원래 설정으로 복원&lt;/p&gt;
+&lt;/div&gt;
+
+
+&lt;/body&gt;
+&lt;/html&gt;
+"></iframe></div></section>
+<section><h2>3. 시상식과 여정 영수증</h2><div class="fit" data-w="1440" data-h="720"><iframe title="3. 시상식과 여정 영수증" width="1440" height="720" srcdoc="&lt;!doctype html&gt;
+&lt;html lang=&quot;ko&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;title&gt;시상식과 여정 영수증&lt;/title&gt;
+
+&lt;/head&gt;
+&lt;body&gt;
+
+
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&amp;display=swap&quot;&gt;
+&lt;style&gt;
+body{margin:0}
+a{color:#7FD3CF}a:hover{color:#A8E4E1}
+.rc{display:flex;justify-content:space-between;font-size:19px;font-variant-numeric:tabular-nums}
+.aw{flex:1;background:#12203A;border:1px solid #24365A;border-radius:24px;padding:22px;display:flex;flex-direction:column;gap:10px;align-items:flex-start}
+&lt;/style&gt;
+
+&lt;div style=&quot;width: 1440px; height: 720px; box-sizing: border-box; padding: 36px 48px; background: #071019; font-family: &#x27;Noto Sans KR&#x27;, sans-serif; color: #F6F3EC; display: flex; gap: 36px; position: relative&quot;&gt;
+&lt;div style=&quot;position: absolute; left: 0; bottom: 0; width: 1440px; height: 6px; background: #5FD4E0; box-shadow: 0 0 40px 10px rgba(95,212,224,0.55)&quot;&gt;&lt;/div&gt;
+
+&lt;div style=&quot;flex: 1; display: flex; flex-direction: column; gap: 22px&quot;&gt;
+&lt;div style=&quot;display: flex; gap: 14px; align-items: center&quot;&gt;
+&lt;span style=&quot;font-size: 15px; font-weight: 700; color: #071019; background: #F2A541; border-radius: 999px; padding: 6px 14px&quot;&gt;시상식&lt;/span&gt;
+&lt;span style=&quot;font-size: 16px; color: #B9C4D6&quot;&gt;바다로 새 버린 주말&lt;/span&gt;
+&lt;/div&gt;
+&lt;h1 style=&quot;margin: 0; font-size: 46px; font-weight: 900; line-height: 1.2&quot;&gt;오늘의 상은…&lt;/h1&gt;
+&lt;div style=&quot;display: flex; gap: 16px&quot;&gt;
+&lt;div class=&quot;aw&quot; style=&quot;background: #F2A541; color: #12203A; border: none&quot;&gt;
+&lt;span style=&quot;font-size: 14px; font-weight: 700&quot;&gt;★ 대상 · 오늘의 순간&lt;/span&gt;
+&lt;span style=&quot;font-size: 30px; font-weight: 900&quot;&gt;길치상&lt;/span&gt;
+&lt;span style=&quot;font-size: 16px; line-height: 1.45&quot;&gt;같은 길 3바퀴. 끝까지 같이 돈 우리에게.&lt;/span&gt;
+&lt;/div&gt;
+&lt;div class=&quot;aw&quot;&gt;
+&lt;span style=&quot;font-size: 14px; font-weight: 700; color: #F28B6B&quot;&gt;온도 전쟁&lt;/span&gt;
+&lt;span style=&quot;font-size: 28px; font-weight: 900&quot;&gt;온도전쟁상&lt;/span&gt;
+&lt;span style=&quot;font-size: 16px; line-height: 1.45; color: #B9C4D6&quot;&gt;19도 vs 26도. 끝까지 아무도 지지 않음.&lt;/span&gt;
+&lt;/div&gt;
+&lt;div class=&quot;aw&quot;&gt;
+&lt;span style=&quot;font-size: 14px; font-weight: 700; color: #7FA8F2&quot;&gt;소나기&lt;/span&gt;
+&lt;span style=&quot;font-size: 28px; font-weight: 900&quot;&gt;우중 드라이버상&lt;/span&gt;
+&lt;span style=&quot;font-size: 16px; line-height: 1.45; color: #B9C4D6&quot;&gt;와이퍼 최고속 7분을 뚫고.&lt;/span&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div style=&quot;display: flex; gap: 14px; align-items: center; background: #12203A; border: 1px solid #24365A; border-radius: 20px; padding: 16px 20px&quot;&gt;
+&lt;div style=&quot;display: flex&quot;&gt;
+&lt;svg role=&quot;img&quot; aria-label=&quot;버디&quot; width=&quot;48&quot; height=&quot;48&quot; viewBox=&quot;0 0 84 84&quot;&gt;&lt;ellipse cx=&quot;42&quot; cy=&quot;48&quot; rx=&quot;32&quot; ry=&quot;30&quot; fill=&quot;#F6F3EC&quot;/&gt;&lt;circle cx=&quot;32&quot; cy=&quot;44&quot; r=&quot;4&quot; fill=&quot;#12203A&quot;/&gt;&lt;circle cx=&quot;52&quot; cy=&quot;44&quot; r=&quot;4&quot; fill=&quot;#12203A&quot;/&gt;&lt;path d=&quot;M36 54 Q42 58 48 54&quot; stroke=&quot;#12203A&quot; stroke-width=&quot;2.5&quot; fill=&quot;none&quot; stroke-linecap=&quot;round&quot;/&gt;&lt;/svg&gt;
+&lt;/div&gt;
+&lt;span style=&quot;font-size: 18px; color: #DCE3EE&quot;&gt;아무도 안 골라서 내가 골랐어. &lt;span style=&quot;color: #8C99B0&quot;&gt;PT에서는 상을 눌러 차 안에서 함께 고릅니다.&lt;/span&gt;&lt;/span&gt;
+&lt;/div&gt;
+&lt;div style=&quot;flex: 1&quot;&gt;&lt;/div&gt;
+&lt;div style=&quot;display: flex; gap: 16px&quot;&gt;
+&lt;button style=&quot;height: 68px; padding: 0 34px; border-radius: 20px; border: none; background: #5FD4E0; color: #071019; font-family: &#x27;Noto Sans KR&#x27;, sans-serif; font-size: 21px; font-weight: 700&quot;&gt;카드 완성하기&lt;/button&gt;
+&lt;button style=&quot;height: 68px; padding: 0 34px; border-radius: 20px; border: 2px solid #3A4F78; background: transparent; color: #F6F3EC; font-family: &#x27;Noto Sans KR&#x27;, sans-serif; font-size: 21px; font-weight: 700&quot;&gt;다시 보기&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div style=&quot;width: 440px; box-sizing: border-box; background: #F6F3EC; color: #12203A; border-radius: 26px; padding: 28px; display: flex; flex-direction: column; gap: 12px; align-self: center&quot;&gt;
+&lt;div style=&quot;display: flex; justify-content: space-between; align-items: baseline&quot;&gt;&lt;span style=&quot;font-size: 20px; font-weight: 900; letter-spacing: 1px&quot;&gt;여정 영수증&lt;/span&gt;&lt;span style=&quot;font-size: 18px; font-weight: 900; letter-spacing: 2px; color: #A8620A; border: 3px double #A8620A; border-radius: 10px; padding: 3px 12px; transform: rotate(-8deg); display: inline-block; opacity: 0.9&quot;&gt;지각&lt;/span&gt;&lt;/div&gt;
+&lt;div style=&quot;font-size: 15px; color: #4A5568; font-variant-numeric: tabular-nums&quot;&gt;예정 도착 13:10 → 실제 14:02&lt;/div&gt;
+&lt;div style=&quot;font-size: 14px; color: #4A5568; line-height: 1.5&quot;&gt;231km · 운전 3시간 40분 · 쉰 시간 22분 · 4명 · 에피소드 6&lt;/div&gt;
+&lt;div style=&quot;border-top: 2px dashed #B9B2A3; margin: 4px 0&quot;&gt;&lt;/div&gt;
+&lt;div class=&quot;rc&quot;&gt;&lt;span&gt;정체 버팀&lt;/span&gt;&lt;span&gt;+35분&lt;/span&gt;&lt;/div&gt;
+&lt;div class=&quot;rc&quot;&gt;&lt;span&gt;휴게소 1곳&lt;/span&gt;&lt;span&gt;+22분&lt;/span&gt;&lt;/div&gt;
+&lt;div class=&quot;rc&quot;&gt;&lt;span&gt;즉흥 바다&lt;/span&gt;&lt;span&gt;+18분&lt;/span&gt;&lt;/div&gt;
+&lt;div class=&quot;rc&quot;&gt;&lt;span&gt;★ 뺑뺑이 3바퀴&lt;/span&gt;&lt;span&gt;+7분&lt;/span&gt;&lt;/div&gt;
+&lt;div class=&quot;rc&quot; style=&quot;color: #4A5568&quot;&gt;&lt;span&gt;덜 막힌 구간&lt;/span&gt;&lt;span&gt;−30분&lt;/span&gt;&lt;/div&gt;
+&lt;div style=&quot;border-top: 2px solid #12203A; margin: 4px 0&quot;&gt;&lt;/div&gt;
+&lt;div class=&quot;rc&quot; style=&quot;font-size: 24px; font-weight: 900&quot;&gt;&lt;span&gt;예정보다 늦게&lt;/span&gt;&lt;span&gt;+52분&lt;/span&gt;&lt;/div&gt;
+&lt;div style=&quot;font-size: 14px; color: #4A5568; text-align: center; margin-top: 6px&quot;&gt;늦은 만큼 이야기가 생겼어 · Car Buddy&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+
+
+&lt;/body&gt;
+&lt;/html&gt;
+"></iframe></div></section>
+<section><h2>4. (로드맵) 동승자 폰: 오늘의 순간 투표</h2><div class="fit" data-w="390" data-h="844"><iframe title="4. (로드맵) 동승자 폰: 오늘의 순간 투표" width="390" height="844" srcdoc="&lt;!doctype html&gt;
+&lt;html lang=&quot;ko&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;title&gt;오늘의 순간 투표&lt;/title&gt;
+
+&lt;/head&gt;
+&lt;body&gt;
+
+
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&amp;display=swap&quot;&gt;
+&lt;style&gt;
+body{margin:0}
+a{color:#2B7F7C}a:hover{color:#1F5F5D}
+.op{display:flex;gap:12px;align-items:center;border:2px solid #D8D1C2;border-radius:16px;padding:12px 14px;background:#FFFFFF}
+.tm{font-size:12px;color:#4A5568}
+.tx{font-size:15px;font-weight:700}
+&lt;/style&gt;
+
+&lt;div style=&quot;width: 390px; height: 844px; box-sizing: border-box; background: #F6F3EC; font-family: &#x27;Noto Sans KR&#x27;, sans-serif; color: #12203A; display: flex; flex-direction: column; overflow: hidden&quot;&gt;
+
+&lt;div style=&quot;background: #12203A; color: #F6F3EC; padding: 28px 20px 20px; display: flex; flex-direction: column; gap: 8px&quot;&gt;
+&lt;div style=&quot;display: flex; justify-content: space-between; align-items: center&quot;&gt;
+&lt;span style=&quot;font-size: 13px; color: #B9C4D6&quot;&gt;준호 님 · 강릉 도착!&lt;/span&gt;
+&lt;span style=&quot;font-size: 12px; color: #12203A; background: #F2A541; border-radius: 999px; padding: 4px 10px; font-weight: 700&quot;&gt;투표 0:21&lt;/span&gt;
+&lt;/div&gt;
+&lt;h1 style=&quot;margin: 0; font-size: 22px; font-weight: 900; line-height: 1.3&quot;&gt;오늘의 순간은?&lt;/h1&gt;
+&lt;span style=&quot;font-size: 13px; color: #B9C4D6&quot;&gt;차 화면에서 시상식이 진행 중이에요. 하나만 골라 주세요.&lt;/span&gt;
+&lt;/div&gt;
+
+&lt;div style=&quot;padding: 18px 16px; display: flex; flex-direction: column; gap: 10px&quot;&gt;
+&lt;div class=&quot;op&quot;&gt;&lt;span style=&quot;width: 22px; height: 22px; border-radius: 50%; border: 2px solid #B9B2A3; flex-shrink: 0&quot;&gt;&lt;/span&gt;&lt;div style=&quot;flex: 1&quot;&gt;&lt;div class=&quot;tm&quot;&gt;10:52 · 온도 전쟁&lt;/div&gt;&lt;div class=&quot;tx&quot;&gt;운전석 19도 vs 조수석 26도&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;div class=&quot;op&quot;&gt;&lt;span style=&quot;width: 22px; height: 22px; border-radius: 50%; border: 2px solid #B9B2A3; flex-shrink: 0&quot;&gt;&lt;/span&gt;&lt;div style=&quot;flex: 1&quot;&gt;&lt;div class=&quot;tm&quot;&gt;12:31 · 계획에 없던 곳&lt;/div&gt;&lt;div class=&quot;tx&quot;&gt;카페 대신 안목해변으로&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;div class=&quot;op&quot; style=&quot;border-color: #12203A; box-shadow: 0 0 0 3px #F2A541&quot;&gt;&lt;span style=&quot;width: 22px; height: 22px; border-radius: 50%; background: #12203A; display: flex; align-items: center; justify-content: center; flex-shrink: 0&quot;&gt;&lt;svg width=&quot;12&quot; height=&quot;12&quot; viewBox=&quot;0 0 12 12&quot; aria-label=&quot;선택됨&quot;&gt;&lt;path d=&quot;M2 6.5 L5 9 L10 3&quot; stroke=&quot;#F6F3EC&quot; stroke-width=&quot;2.2&quot; fill=&quot;none&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;/&gt;&lt;/svg&gt;&lt;/span&gt;&lt;div style=&quot;flex: 1&quot;&gt;&lt;div class=&quot;tm&quot;&gt;12:58 · 뺑뺑이&lt;/div&gt;&lt;div class=&quot;tx&quot;&gt;같은 길 3바퀴&lt;/div&gt;&lt;/div&gt;&lt;span style=&quot;font-size: 12px; font-weight: 700; color: #8A5A12&quot;&gt;2표&lt;/span&gt;&lt;/div&gt;
+&lt;div class=&quot;op&quot;&gt;&lt;span style=&quot;width: 22px; height: 22px; border-radius: 50%; border: 2px solid #B9B2A3; flex-shrink: 0&quot;&gt;&lt;/span&gt;&lt;div style=&quot;flex: 1&quot;&gt;&lt;div class=&quot;tm&quot;&gt;13:22 · 소나기&lt;/div&gt;&lt;div class=&quot;tx&quot;&gt;와이퍼 최고속 7분&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;div class=&quot;op&quot;&gt;&lt;span style=&quot;width: 22px; height: 22px; border-radius: 50%; border: 2px solid #B9B2A3; flex-shrink: 0&quot;&gt;&lt;/span&gt;&lt;div style=&quot;flex: 1&quot;&gt;&lt;div class=&quot;tm&quot;&gt;10:40 · 정체&lt;/div&gt;&lt;div class=&quot;tx&quot;&gt;35분 거북이&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div style=&quot;margin: 0 16px; background: #12203A; color: #F6F3EC; border-radius: 16px; padding: 14px 16px; display: flex; gap: 12px; align-items: center&quot;&gt;
+&lt;span style=&quot;font-size: 12px; font-weight: 700; color: #12203A; background: #F2A541; border-radius: 999px; padding: 4px 10px; flex-shrink: 0&quot;&gt;로드맵&lt;/span&gt;
+&lt;span style=&quot;font-size: 14px; line-height: 1.45&quot;&gt;동승자 폰 참여는 별도 서버가 필요해 공모전 범위에서 뺐습니다. PT에서는 차 화면에서 함께 고릅니다.&lt;/span&gt;
+&lt;/div&gt;
+
+&lt;div style=&quot;margin: 10px 16px 0; border: 2px dashed #B9B2A3; border-radius: 16px; padding: 12px 14px; display: flex; gap: 12px; align-items: center&quot;&gt;
+&lt;div style=&quot;display: flex; gap: 6px&quot;&gt;&lt;span style=&quot;width: 40px; height: 40px; border-radius: 8px; background: linear-gradient(160deg, #8FD0C2, #3F8F7E)&quot;&gt;&lt;/span&gt;&lt;span style=&quot;width: 40px; height: 40px; border-radius: 8px; background: linear-gradient(160deg, #F2C48D, #C9703A)&quot;&gt;&lt;/span&gt;&lt;/div&gt;
+&lt;div style=&quot;flex: 1; display: flex; flex-direction: column; gap: 2px&quot;&gt;&lt;span style=&quot;font-size: 14px; font-weight: 700&quot;&gt;내 사진 2장이 카드에 들어가요&lt;/span&gt;&lt;span style=&quot;font-size: 12px; color: #4A5568&quot;&gt;&#x27;뺑뺑이 중&#x27;, &#x27;휴게소&#x27; 자동 태그&lt;/span&gt;&lt;/div&gt;
+&lt;span style=&quot;font-size: 13px; font-weight: 700; color: #2B7F7C&quot;&gt;+ 더 올리기&lt;/span&gt;
+&lt;/div&gt;
+
+&lt;div style=&quot;flex: 1&quot;&gt;&lt;/div&gt;
+&lt;div style=&quot;padding: 0 16px 22px; display: flex; flex-direction: column; gap: 10px&quot;&gt;
+&lt;button style=&quot;height: 54px; border-radius: 16px; border: none; background: #12203A; color: #F6F3EC; font-family: &#x27;Noto Sans KR&#x27;, sans-serif; font-size: 17px; font-weight: 700&quot;&gt;투표하기&lt;/button&gt;
+&lt;p style=&quot;margin: 0; font-size: 11px; color: #4A5568; text-align: center&quot;&gt;투표가 끝나면 이 화면이 완성된 카드로 바뀝니다.&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+
+
+&lt;/body&gt;
+&lt;/html&gt;
+"></iframe></div></section>
+<section><h2>5. 공유 이미지 (9:16) · PT</h2><div class="fit" data-w="540" data-h="960"><iframe title="5. 공유 이미지 (9:16) · PT" width="540" height="960" srcdoc="&lt;!doctype html&gt;
+&lt;html lang=&quot;ko&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;title&gt;공유 이미지&lt;/title&gt;
+
+&lt;/head&gt;
+&lt;body&gt;
+
+
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&amp;display=swap&quot;&gt;
+&lt;style&gt;
+body{margin:0}
+a{color:#F6F3EC}a:hover{color:#FFFFFF}
+.rc{display:flex;justify-content:space-between;font-size:17px;font-variant-numeric:tabular-nums}
+&lt;/style&gt;
+
+&lt;div style=&quot;width: 540px; height: 960px; box-sizing: border-box; position: relative; overflow: hidden; font-family: &#x27;Noto Sans KR&#x27;, sans-serif; color: #F6F3EC; background: #0B1528&quot;&gt;
+&lt;div style=&quot;position: absolute; left: 0; top: 0; width: 540px; height: 8px; background: #5FD4E0&quot;&gt;&lt;/div&gt;
+
+&lt;div style=&quot;position: absolute; left: 36px; top: 44px; width: 468px; display: flex; flex-direction: column; gap: 10px&quot;&gt;
+&lt;span style=&quot;font-size: 15px; font-weight: 700; letter-spacing: 1px; color: #A8EEF5&quot;&gt;2026.11.07 · 서울 → 강릉 231km&lt;/span&gt;
+&lt;h1 style=&quot;margin: 0; font-size: 50px; font-weight: 900; line-height: 1.12&quot;&gt;바다로&lt;br&gt;새 버린 주말&lt;/h1&gt;
+&lt;div style=&quot;display: flex; gap: 8px; margin-top: 6px&quot;&gt;
+&lt;span style=&quot;font-size: 14px; font-weight: 700; color: #12203A; background: #F2A541; border-radius: 999px; padding: 6px 12px&quot;&gt;★ 길치상&lt;/span&gt;
+&lt;span style=&quot;font-size: 14px; font-weight: 700; color: #12203A; background: #F6F3EC; border-radius: 999px; padding: 6px 12px&quot;&gt;온도전쟁상&lt;/span&gt;
+&lt;span style=&quot;font-size: 14px; font-weight: 700; color: #12203A; background: #F6F3EC; border-radius: 999px; padding: 6px 12px&quot;&gt;우중 드라이버상&lt;/span&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div style=&quot;position: absolute; left: 36px; top: 300px; width: 468px; box-sizing: border-box; background: #F6F3EC; color: #12203A; border-radius: 22px; padding: 24px 26px; display: flex; flex-direction: column; gap: 9px; transform: rotate(-1.5deg); box-shadow: 0 20px 40px rgba(0,0,0,0.35)&quot;&gt;
+&lt;div style=&quot;display: flex; justify-content: space-between; align-items: baseline&quot;&gt;&lt;span style=&quot;font-size: 18px; font-weight: 900; letter-spacing: 1px&quot;&gt;여정 영수증&lt;/span&gt;&lt;span style=&quot;font-size: 16px; font-weight: 900; letter-spacing: 2px; color: #A8620A; border: 3px double #A8620A; border-radius: 10px; padding: 2px 10px; transform: rotate(-8deg); display: inline-block; opacity: 0.9&quot;&gt;지각&lt;/span&gt;&lt;/div&gt;
+&lt;div style=&quot;font-size: 13px; color: #4A5568; font-variant-numeric: tabular-nums&quot;&gt;예정 13:10 → 도착 14:02 · 231km · 4명&lt;/div&gt;
+&lt;div style=&quot;border-top: 2px dashed #B9B2A3&quot;&gt;&lt;/div&gt;
+&lt;div class=&quot;rc&quot;&gt;&lt;span&gt;정체 버팀&lt;/span&gt;&lt;span&gt;+35분&lt;/span&gt;&lt;/div&gt;
+&lt;div class=&quot;rc&quot;&gt;&lt;span&gt;휴게소&lt;/span&gt;&lt;span&gt;+22분&lt;/span&gt;&lt;/div&gt;
+&lt;div class=&quot;rc&quot;&gt;&lt;span&gt;즉흥 바다&lt;/span&gt;&lt;span&gt;+18분&lt;/span&gt;&lt;/div&gt;
+&lt;div class=&quot;rc&quot; style=&quot;font-weight: 900&quot;&gt;&lt;span&gt;★ 뺑뺑이 3바퀴&lt;/span&gt;&lt;span&gt;+7분&lt;/span&gt;&lt;/div&gt;
+&lt;div class=&quot;rc&quot; style=&quot;color: #4A5568&quot;&gt;&lt;span&gt;덜 막힌 구간&lt;/span&gt;&lt;span&gt;−30분&lt;/span&gt;&lt;/div&gt;
+&lt;div style=&quot;border-top: 2px solid #12203A&quot;&gt;&lt;/div&gt;
+&lt;div class=&quot;rc&quot; style=&quot;font-size: 22px; font-weight: 900&quot;&gt;&lt;span&gt;예정보다 늦게&lt;/span&gt;&lt;span&gt;+52분&lt;/span&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div style=&quot;position: absolute; left: 36px; top: 668px; width: 468px; display: flex; flex-direction: column; gap: 10px&quot;&gt;
+&lt;span style=&quot;font-size: 13px; font-weight: 700; color: #A8EEF5; letter-spacing: 1px&quot;&gt;오늘의 에피소드 6&lt;/span&gt;
+&lt;div style=&quot;display: flex; flex-wrap: wrap; gap: 8px&quot;&gt;
+&lt;span style=&quot;font-size: 14px; color: #F6F3EC; border: 1px solid #3A4F78; border-radius: 999px; padding: 5px 12px&quot;&gt;정체 35분&lt;/span&gt;
+&lt;span style=&quot;font-size: 14px; color: #F6F3EC; border: 1px solid #3A4F78; border-radius: 999px; padding: 5px 12px&quot;&gt;19도 vs 26도&lt;/span&gt;
+&lt;span style=&quot;font-size: 14px; color: #F6F3EC; border: 1px solid #3A4F78; border-radius: 999px; padding: 5px 12px&quot;&gt;휴게소 22분&lt;/span&gt;
+&lt;span style=&quot;font-size: 14px; color: #F6F3EC; border: 1px solid #3A4F78; border-radius: 999px; padding: 5px 12px&quot;&gt;카페 대신 바다&lt;/span&gt;
+&lt;span style=&quot;font-size: 14px; color: #12203A; background: #F2A541; border-radius: 999px; padding: 5px 12px; font-weight: 700&quot;&gt;★ 같은 길 3바퀴&lt;/span&gt;
+&lt;span style=&quot;font-size: 14px; color: #F6F3EC; border: 1px solid #3A4F78; border-radius: 999px; padding: 5px 12px&quot;&gt;소나기 7분&lt;/span&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div style=&quot;position: absolute; left: 36px; bottom: 40px; width: 468px; display: flex; flex-direction: column; gap: 16px&quot;&gt;
+&lt;div style=&quot;display: flex; gap: 12px; align-items: center&quot;&gt;
+&lt;svg role=&quot;img&quot; aria-label=&quot;나침반을 든 버디&quot; width=&quot;66&quot; height=&quot;66&quot; viewBox=&quot;0 0 84 84&quot; style=&quot;flex-shrink: 0&quot;&gt;&lt;ellipse cx=&quot;42&quot; cy=&quot;48&quot; rx=&quot;32&quot; ry=&quot;30&quot; fill=&quot;#F6F3EC&quot;/&gt;&lt;circle cx=&quot;32&quot; cy=&quot;44&quot; r=&quot;4&quot; fill=&quot;#12203A&quot;/&gt;&lt;circle cx=&quot;52&quot; cy=&quot;44&quot; r=&quot;4&quot; fill=&quot;#12203A&quot;/&gt;&lt;path d=&quot;M36 54 Q42 58 48 54&quot; stroke=&quot;#12203A&quot; stroke-width=&quot;2.5&quot; fill=&quot;none&quot; stroke-linecap=&quot;round&quot;/&gt;&lt;circle cx=&quot;66&quot; cy=&quot;62&quot; r=&quot;11&quot; fill=&quot;#F2A541&quot; stroke=&quot;#12203A&quot; stroke-width=&quot;2&quot;/&gt;&lt;path d=&quot;M66 55 L69 62 L66 69 L63 62 Z&quot; fill=&quot;#12203A&quot;/&gt;&lt;/svg&gt;
+&lt;p style=&quot;margin: 0; font-size: 16px; line-height: 1.5; color: #E4EEF5&quot;&gt;카페 대신 바다, 같은 길은 세 바퀴. 늦은 만큼 이야기가 생겼어.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div style=&quot;display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(246,243,236,0.3); padding-top: 14px&quot;&gt;
+&lt;span style=&quot;font-size: 14px; font-weight: 700&quot;&gt;Car Buddy&lt;/span&gt;
+&lt;span style=&quot;font-size: 12px; color: #C9D6E3&quot;&gt;길을 잃은 순간까지, 차가 기억합니다 · Pleos Connect&lt;/span&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+
+
+&lt;/body&gt;
+&lt;/html&gt;
+"></iframe></div></section>
+<section><h2>6. Portrait(창 1개) 상영회</h2><div class="fit" data-w="720" data-h="1000"><iframe title="6. Portrait(창 1개) 상영회" width="720" height="1000" srcdoc="&lt;!doctype html&gt;
+&lt;html lang=&quot;ko&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;title&gt;세로 화면 상영회&lt;/title&gt;
+
+&lt;/head&gt;
+&lt;body&gt;
+
+
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&amp;display=swap&quot;&gt;
+&lt;style&gt;
+body{margin:0}
+a{color:#5FD4E0}a:hover{color:#A8EEF5}
+&lt;/style&gt;
+
+&lt;div style=&quot;width: 720px; height: 1000px; box-sizing: border-box; padding: 28px 24px; background: #071019; font-family: &#x27;Noto Sans KR&#x27;, sans-serif; color: #F6F3EC; display: flex; flex-direction: column; gap: 18px; position: relative; overflow: hidden&quot;&gt;
+&lt;div style=&quot;position: absolute; left: 0; bottom: 0; width: 720px; height: 6px; background: #F6F3EC; box-shadow: 0 0 30px 8px rgba(246,243,236,0.45)&quot;&gt;&lt;/div&gt;
+
+&lt;div style=&quot;display: flex; justify-content: space-between; align-items: center&quot;&gt;
+&lt;span style=&quot;font-size: 14px; font-weight: 700; color: #071019; background: #5FD4E0; border-radius: 999px; padding: 5px 12px&quot;&gt;상영회 5 / 6&lt;/span&gt;
+&lt;span style=&quot;font-size: 14px; color: #8C99B0&quot;&gt;닫기 ✕&lt;/span&gt;
+&lt;/div&gt;
+&lt;div style=&quot;display: flex; gap: 6px&quot;&gt;
+&lt;span style=&quot;flex: 1; height: 5px; border-radius: 3px; background: #F6F3EC&quot;&gt;&lt;/span&gt;&lt;span style=&quot;flex: 1; height: 5px; border-radius: 3px; background: #F6F3EC&quot;&gt;&lt;/span&gt;&lt;span style=&quot;flex: 1; height: 5px; border-radius: 3px; background: #F6F3EC&quot;&gt;&lt;/span&gt;&lt;span style=&quot;flex: 1; height: 5px; border-radius: 3px; background: #F6F3EC&quot;&gt;&lt;/span&gt;&lt;span style=&quot;flex: 1; height: 5px; border-radius: 3px; background: #F6F3EC&quot;&gt;&lt;/span&gt;&lt;span style=&quot;flex: 1; height: 5px; border-radius: 3px; background: linear-gradient(90deg, #F6F3EC 55%, rgba(246,243,236,0.25) 55%)&quot;&gt;&lt;/span&gt;&lt;span style=&quot;flex: 1; height: 5px; border-radius: 3px; background: rgba(246,243,236,0.25)&quot;&gt;&lt;/span&gt;&lt;span style=&quot;flex: 1; height: 5px; border-radius: 3px; background: rgba(246,243,236,0.25)&quot;&gt;&lt;/span&gt;&lt;span style=&quot;flex: 1; height: 5px; border-radius: 3px; background: rgba(246,243,236,0.25)&quot;&gt;&lt;/span&gt;
+&lt;/div&gt;
+
+&lt;div style=&quot;height: 400px; border-radius: 24px; background: #0E1C2E; border: 1px solid #24365A; overflow: hidden; flex-shrink: 0&quot;&gt;
+&lt;svg role=&quot;img&quot; aria-label=&quot;같은 사거리를 세 번 돈 궤적&quot; width=&quot;672&quot; height=&quot;400&quot; viewBox=&quot;0 0 760 452&quot; preserveAspectRatio=&quot;xMidYMid slice&quot;&gt;
+&lt;g stroke=&quot;#1E3350&quot; stroke-width=&quot;18&quot; fill=&quot;none&quot; stroke-linecap=&quot;round&quot;&gt;&lt;path d=&quot;M0 260 H760&quot;/&gt;&lt;path d=&quot;M380 0 V452&quot;/&gt;&lt;path d=&quot;M140 0 L260 452&quot;/&gt;&lt;/g&gt;
+&lt;path d=&quot;M40 260 H330 Q380 260 380 210 V140 Q380 90 430 90 H520 Q570 90 570 140 V210 Q570 260 520 260 H430 Q380 260 380 310 V360 Q380 400 340 400 H300 Q260 400 260 360 V300 Q260 260 300 260 H720&quot; stroke=&quot;#F2A541&quot; stroke-width=&quot;7&quot; fill=&quot;none&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;/&gt;
+&lt;circle cx=&quot;380&quot; cy=&quot;260&quot; r=&quot;24&quot; fill=&quot;none&quot; stroke=&quot;#F6F3EC&quot; stroke-width=&quot;3&quot; stroke-dasharray=&quot;6 6&quot;/&gt;
+&lt;/svg&gt;
+&lt;/div&gt;
+
+&lt;div style=&quot;display: flex; flex-direction: column; gap: 6px&quot;&gt;
+&lt;span style=&quot;font-size: 16px; color: #F2A541; font-weight: 700&quot;&gt;12:58 · 뺑뺑이&lt;/span&gt;
+&lt;h2 style=&quot;margin: 0; font-size: 32px; font-weight: 900; line-height: 1.25&quot;&gt;같은 길을 3번 돌았어.&lt;br&gt;나도 어지러웠어.&lt;/h2&gt;
+&lt;/div&gt;
+
+&lt;div style=&quot;display: flex; gap: 12px; align-items: center; background: #12203A; border: 1px solid #24365A; border-radius: 18px; padding: 12px 14px&quot;&gt;
+&lt;span style=&quot;width: 32px; height: 32px; border-radius: 50%; background: #F6F3EC; box-shadow: 0 0 16px 4px rgba(246,243,236,0.4); flex-shrink: 0; margin: 4px&quot;&gt;&lt;/span&gt;
+&lt;span style=&quot;font-size: 16px&quot;&gt;실내등 White &lt;span style=&quot;color: #8C99B0&quot;&gt;· 다음 소나기 장면에서는 Blue&lt;/span&gt;&lt;/span&gt;
+&lt;/div&gt;
+
+&lt;div style=&quot;display: flex; gap: 10px; align-items: flex-end&quot;&gt;
+&lt;svg role=&quot;img&quot; aria-label=&quot;어지러운 버디&quot; width=&quot;52&quot; height=&quot;52&quot; viewBox=&quot;0 0 84 84&quot;&gt;&lt;ellipse cx=&quot;42&quot; cy=&quot;48&quot; rx=&quot;32&quot; ry=&quot;30&quot; fill=&quot;#F6F3EC&quot;/&gt;&lt;path d=&quot;M28 40 L36 46 M36 40 L28 46 M48 40 L56 46 M56 40 L48 46&quot; stroke=&quot;#12203A&quot; stroke-width=&quot;3&quot; stroke-linecap=&quot;round&quot;/&gt;&lt;path d=&quot;M36 56 Q42 52 48 56&quot; stroke=&quot;#12203A&quot; stroke-width=&quot;2.5&quot; fill=&quot;none&quot; stroke-linecap=&quot;round&quot;/&gt;&lt;/svg&gt;
+&lt;p style=&quot;margin: 0 0 4px; font-size: 17px; background: #F6F3EC; color: #12203A; border-radius: 16px 16px 16px 4px; padding: 10px 14px&quot;&gt;그래도 덕분에 같은 풍경 세 번 봤잖아.&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;div style=&quot;flex: 1&quot;&gt;&lt;/div&gt;
+&lt;div style=&quot;display: flex; gap: 12px&quot;&gt;
+&lt;button style=&quot;height: 72px; flex: 1; border-radius: 20px; border: 2px solid #3A4F78; background: transparent; color: #F6F3EC; font-family: &#x27;Noto Sans KR&#x27;, sans-serif; font-size: 18px; font-weight: 700&quot;&gt;숨기기&lt;/button&gt;
+&lt;button style=&quot;height: 72px; flex: 1.4; border-radius: 20px; border: none; background: #5FD4E0; color: #071019; font-family: &#x27;Noto Sans KR&#x27;, sans-serif; font-size: 19px; font-weight: 700&quot;&gt;다음 · 소나기&lt;/button&gt;
+&lt;/div&gt;
+&lt;span style=&quot;font-size: 12px; color: #8C99B0; text-align: center&quot;&gt;Portrait(창 1개) · 비율 예시이며 실제 창 크기는 에뮬레이터에서 확인 · 실제 폰트 Asta Sans&lt;/span&gt;
+&lt;/div&gt;
+
+
+&lt;/body&gt;
+&lt;/html&gt;
+"></iframe></div></section>
+<section><h2>7. 여정 영수증: 지각·정시·일찍</h2><div class="fit" data-w="1200" data-h="860"><iframe title="7. 여정 영수증: 지각·정시·일찍" width="1200" height="860" srcdoc="&lt;!doctype html&gt;
+&lt;html lang=&quot;ko&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;title&gt;여정 영수증 세 가지&lt;/title&gt;
+
+&lt;/head&gt;
+&lt;body&gt;
+
+
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&amp;display=swap&quot;&gt;
+&lt;style&gt;
+body{margin:0}
+a{color:#5FD4E0}a:hover{color:#A8EEF5}
+.col{flex:1;display:flex;flex-direction:column;gap:16px;min-width:0}
+.tag{font-size:13px;font-weight:700;letter-spacing:1px;color:#8C99B0}
+.paper{background:#F6F3EC;color:#12203A;border-radius:22px;padding:22px 22px 18px;display:flex;flex-direction:column;gap:9px;box-shadow:0 18px 36px rgba(0,0,0,0.35)}
+.hd{display:flex;justify-content:space-between;align-items:center}
+.tt{font-size:18px;font-weight:900;letter-spacing:1px}
+.st{font-size:16px;font-weight:900;letter-spacing:2px;border-radius:10px;padding:3px 10px;transform:rotate(-8deg);display:inline-block;opacity:0.92}
+.meta{font-size:13px;color:#4A5568;font-variant-numeric:tabular-nums}
+.sum{font-size:13px;color:#4A5568;line-height:1.5}
+.sec{font-size:11px;font-weight:700;letter-spacing:1px;color:#8A8274}
+.dash{border-top:2px dashed #B9B2A3}
+.solid{border-top:2px solid #12203A}
+.rc{display:flex;justify-content:space-between;font-size:16px;font-variant-numeric:tabular-nums}
+.road{color:#4A5568}
+.tot{display:flex;justify-content:space-between;font-size:20px;font-weight:900;font-variant-numeric:tabular-nums}
+.bd{display:flex;gap:10px;align-items:flex-end}
+.bb{margin:0 0 4px;font-size:15px;line-height:1.45;background:#F6F3EC;color:#12203A;border-radius:16px 16px 16px 4px;padding:10px 14px}
+&lt;/style&gt;
+
+&lt;div style=&quot;width: 1200px; height: 860px; box-sizing: border-box; padding: 40px 48px; background: #071019; font-family: &#x27;Noto Sans KR&#x27;, sans-serif; color: #F6F3EC; display: flex; flex-direction: column; gap: 26px&quot;&gt;
+
+&lt;div style=&quot;display: flex; flex-direction: column; gap: 8px&quot;&gt;
+&lt;span style=&quot;font-size: 14px; font-weight: 700; letter-spacing: 2px; color: #A8EEF5&quot;&gt;V4 · 여정 영수증&lt;/span&gt;
+&lt;h1 style=&quot;margin: 0; font-size: 32px; font-weight: 900; line-height: 1.25&quot;&gt;늦어도, 제때 와도, 일찍 와도 영수증은 비지 않습니다&lt;/h1&gt;
+&lt;p style=&quot;margin: 0; font-size: 15px; color: #B9C4D6&quot;&gt;위 &#x27;여정 내역&#x27;은 항상 같고, 아래 &#x27;시간 정산&#x27;과 도장만 결과에 따라 바뀝니다. 기준은 출발 때 처음 받은 예정 도착 시각.&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;div style=&quot;display: flex; gap: 28px; align-items: flex-start&quot;&gt;
+
+&lt;!-- LATE --&gt;
+&lt;div class=&quot;col&quot;&gt;
+&lt;span class=&quot;tag&quot;&gt;LATE · 오차 +5분 초과&lt;/span&gt;
+&lt;div class=&quot;paper&quot;&gt;
+&lt;div class=&quot;hd&quot;&gt;&lt;span class=&quot;tt&quot;&gt;여정 영수증&lt;/span&gt;&lt;span class=&quot;st&quot; style=&quot;color: #A8620A; border: 3px double #A8620A&quot;&gt;지각&lt;/span&gt;&lt;/div&gt;
+&lt;div class=&quot;meta&quot;&gt;예정 13:10 → 도착 14:02&lt;/div&gt;
+&lt;div class=&quot;dash&quot;&gt;&lt;/div&gt;
+&lt;span class=&quot;sec&quot;&gt;여정 내역&lt;/span&gt;
+&lt;div class=&quot;sum&quot;&gt;서울 → 강릉 231km · 운전 3시간 40분 · 쉰 시간 22분 · 4명 · 에피소드 6&lt;/div&gt;
+&lt;div class=&quot;dash&quot;&gt;&lt;/div&gt;
+&lt;span class=&quot;sec&quot;&gt;시간 정산&lt;/span&gt;
+&lt;div class=&quot;rc&quot;&gt;&lt;span&gt;정체 버팀&lt;/span&gt;&lt;span&gt;+35분&lt;/span&gt;&lt;/div&gt;
+&lt;div class=&quot;rc&quot;&gt;&lt;span&gt;휴게소 1곳&lt;/span&gt;&lt;span&gt;+22분&lt;/span&gt;&lt;/div&gt;
+&lt;div class=&quot;rc&quot;&gt;&lt;span&gt;즉흥 바다&lt;/span&gt;&lt;span&gt;+18분&lt;/span&gt;&lt;/div&gt;
+&lt;div class=&quot;rc&quot;&gt;&lt;span&gt;★ 뺑뺑이 3바퀴&lt;/span&gt;&lt;span&gt;+7분&lt;/span&gt;&lt;/div&gt;
+&lt;div class=&quot;rc road&quot;&gt;&lt;span&gt;덜 막힌 구간&lt;/span&gt;&lt;span&gt;−30분&lt;/span&gt;&lt;/div&gt;
+&lt;div class=&quot;solid&quot;&gt;&lt;/div&gt;
+&lt;div class=&quot;tot&quot;&gt;&lt;span&gt;예정보다 늦게&lt;/span&gt;&lt;span&gt;+52분&lt;/span&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;bd&quot;&gt;
+&lt;svg role=&quot;img&quot; aria-label=&quot;웃는 버디&quot; width=&quot;44&quot; height=&quot;44&quot; viewBox=&quot;0 0 84 84&quot;&gt;&lt;ellipse cx=&quot;42&quot; cy=&quot;48&quot; rx=&quot;32&quot; ry=&quot;30&quot; fill=&quot;#F6F3EC&quot;/&gt;&lt;circle cx=&quot;32&quot; cy=&quot;44&quot; r=&quot;4&quot; fill=&quot;#12203A&quot;/&gt;&lt;circle cx=&quot;52&quot; cy=&quot;44&quot; r=&quot;4&quot; fill=&quot;#12203A&quot;/&gt;&lt;path d=&quot;M34 54 Q42 61 50 54&quot; stroke=&quot;#12203A&quot; stroke-width=&quot;2.5&quot; fill=&quot;none&quot; stroke-linecap=&quot;round&quot;/&gt;&lt;/svg&gt;
+&lt;p class=&quot;bb&quot;&gt;늦은 만큼 이야기가 생겼어.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- ON_TIME --&gt;
+&lt;div class=&quot;col&quot;&gt;
+&lt;span class=&quot;tag&quot;&gt;ON_TIME · 오차 ±5분 이내&lt;/span&gt;
+&lt;div class=&quot;paper&quot;&gt;
+&lt;div class=&quot;hd&quot;&gt;&lt;span class=&quot;tt&quot;&gt;여정 영수증&lt;/span&gt;&lt;span class=&quot;st&quot; style=&quot;color: #17716F; border: 3px double #17716F&quot;&gt;정시 도착&lt;/span&gt;&lt;/div&gt;
+&lt;div class=&quot;meta&quot;&gt;예정 11:40 → 도착 11:42&lt;/div&gt;
+&lt;div class=&quot;dash&quot;&gt;&lt;/div&gt;
+&lt;span class=&quot;sec&quot;&gt;여정 내역&lt;/span&gt;
+&lt;div class=&quot;sum&quot;&gt;서울 → 가평 72km · 운전 1시간 28분 · 쉰 시간 15분 · 2명 · 에피소드 3&lt;/div&gt;
+&lt;div class=&quot;dash&quot;&gt;&lt;/div&gt;
+&lt;span class=&quot;sec&quot;&gt;시간 정산&lt;/span&gt;
+&lt;div class=&quot;rc&quot;&gt;&lt;span&gt;휴게소 1곳&lt;/span&gt;&lt;span&gt;+15분&lt;/span&gt;&lt;/div&gt;
+&lt;div class=&quot;rc&quot;&gt;&lt;span&gt;뺑뺑이 2바퀴&lt;/span&gt;&lt;span&gt;+4분&lt;/span&gt;&lt;/div&gt;
+&lt;div class=&quot;rc road&quot;&gt;&lt;span&gt;덜 막힌 구간&lt;/span&gt;&lt;span&gt;−17분&lt;/span&gt;&lt;/div&gt;
+&lt;div class=&quot;solid&quot;&gt;&lt;/div&gt;
+&lt;div class=&quot;tot&quot;&gt;&lt;span&gt;결국 오차&lt;/span&gt;&lt;span&gt;+2분&lt;/span&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;bd&quot;&gt;
+&lt;svg role=&quot;img&quot; aria-label=&quot;엄지를 든 버디&quot; width=&quot;44&quot; height=&quot;44&quot; viewBox=&quot;0 0 84 84&quot;&gt;&lt;ellipse cx=&quot;42&quot; cy=&quot;48&quot; rx=&quot;32&quot; ry=&quot;30&quot; fill=&quot;#F6F3EC&quot;/&gt;&lt;circle cx=&quot;32&quot; cy=&quot;44&quot; r=&quot;4&quot; fill=&quot;#12203A&quot;/&gt;&lt;circle cx=&quot;52&quot; cy=&quot;44&quot; r=&quot;4&quot; fill=&quot;#12203A&quot;/&gt;&lt;path d=&quot;M36 54 Q42 58 48 54&quot; stroke=&quot;#12203A&quot; stroke-width=&quot;2.5&quot; fill=&quot;none&quot; stroke-linecap=&quot;round&quot;/&gt;&lt;/svg&gt;
+&lt;p class=&quot;bb&quot;&gt;쉬고 헤맸는데도 길이 도와줬어.&lt;/p&gt;
+&lt;/div&gt;
+&lt;span style=&quot;font-size: 13px; color: #8C99B0; line-height: 1.5&quot;&gt;늘어난 항목이 없으면 시간 정산 대신 &quot;예정 그대로, 오차 1분&quot;&lt;/span&gt;
+&lt;/div&gt;
+
+&lt;!-- EARLY --&gt;
+&lt;div class=&quot;col&quot;&gt;
+&lt;span class=&quot;tag&quot;&gt;EARLY · 오차 −5분 초과&lt;/span&gt;
+&lt;div class=&quot;paper&quot;&gt;
+&lt;div class=&quot;hd&quot;&gt;&lt;span class=&quot;tt&quot;&gt;여정 영수증&lt;/span&gt;&lt;span class=&quot;st&quot; style=&quot;color: #2F55B5; border: 3px double #2F55B5&quot;&gt;일찍 도착&lt;/span&gt;&lt;/div&gt;
+&lt;div class=&quot;meta&quot;&gt;예정 19:30 → 도착 19:18&lt;/div&gt;
+&lt;div class=&quot;dash&quot;&gt;&lt;/div&gt;
+&lt;span class=&quot;sec&quot;&gt;여정 내역&lt;/span&gt;
+&lt;div class=&quot;sum&quot;&gt;수원 → 대전 128km · 운전 1시간 36분 · 혼자 · 터널 4개 · 창문 연 시간 12분&lt;/div&gt;
+&lt;div class=&quot;dash&quot;&gt;&lt;/div&gt;
+&lt;span class=&quot;sec&quot;&gt;시간 정산&lt;/span&gt;
+&lt;div class=&quot;rc road&quot;&gt;&lt;span&gt;덜 막힌 구간&lt;/span&gt;&lt;span&gt;−12분&lt;/span&gt;&lt;/div&gt;
+&lt;div class=&quot;solid&quot;&gt;&lt;/div&gt;
+&lt;div class=&quot;tot&quot;&gt;&lt;span&gt;예정보다 일찍&lt;/span&gt;&lt;span&gt;−12분&lt;/span&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;bd&quot;&gt;
+&lt;svg role=&quot;img&quot; aria-label=&quot;커피를 든 버디&quot; width=&quot;44&quot; height=&quot;44&quot; viewBox=&quot;0 0 84 84&quot;&gt;&lt;ellipse cx=&quot;42&quot; cy=&quot;48&quot; rx=&quot;32&quot; ry=&quot;30&quot; fill=&quot;#F6F3EC&quot;/&gt;&lt;circle cx=&quot;32&quot; cy=&quot;44&quot; r=&quot;4&quot; fill=&quot;#12203A&quot;/&gt;&lt;circle cx=&quot;52&quot; cy=&quot;44&quot; r=&quot;4&quot; fill=&quot;#12203A&quot;/&gt;&lt;path d=&quot;M36 54 Q42 58 48 54&quot; stroke=&quot;#12203A&quot; stroke-width=&quot;2.5&quot; fill=&quot;none&quot; stroke-linecap=&quot;round&quot;/&gt;&lt;rect x=&quot;58&quot; y=&quot;56&quot; width=&quot;16&quot; height=&quot;16&quot; rx=&quot;3&quot; fill=&quot;#C98B4E&quot; stroke=&quot;#12203A&quot; stroke-width=&quot;2&quot;/&gt;&lt;/svg&gt;
+&lt;p class=&quot;bb&quot;&gt;길이 잘 뚫린 날. 12분 벌었으니 커피 한 잔?&lt;/p&gt;
+&lt;/div&gt;
+&lt;span style=&quot;font-size: 13px; color: #8C99B0; line-height: 1.5&quot;&gt;에피소드가 없는 날은 여정 내역을 터널 수·창문 연 시간 같은 차량 집계로 채움&lt;/span&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+
+&lt;div style=&quot;flex: 1&quot;&gt;&lt;/div&gt;
+&lt;div style=&quot;display: flex; gap: 12px; align-items: flex-start; background: #12203A; border: 1px solid #24365A; border-radius: 18px; padding: 14px 18px&quot;&gt;
+&lt;span style=&quot;font-size: 13px; font-weight: 700; color: #071019; background: #F2A541; border-radius: 999px; padding: 3px 10px; flex-shrink: 0&quot;&gt;안전&lt;/span&gt;
+&lt;span style=&quot;font-size: 14px; line-height: 1.55; color: #DCE3EE&quot;&gt;일찍·정시 도착에는 상·점수·축하 효과음 없음 · 평균 속도 표시 없음 · 줄어든 시간은 항상 &#x27;덜 막힌 구간&#x27;(도로 덕분) · &quot;만회&quot;, &quot;빨리 왔다&quot; 같은 속도 칭찬 문구 금지 · 목적지 없는 날은 달린·쉰·헤맨 시간과 들른 곳만 보여 주고 도장 없음 · 1시간 미만 여정은 정시 기준 ±3분&lt;/span&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+
+
+&lt;/body&gt;
+&lt;/html&gt;
+"></iframe></div></section>
+<section><h2>8a. 오늘의 길: 상영회 첫 장</h2><div class="fit" data-w="1440" data-h="720"><iframe title="8a. 오늘의 길: 상영회 첫 장" width="1440" height="720" srcdoc="&lt;!doctype html&gt;
+&lt;html lang=&quot;ko&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;title&gt;오늘의 길 상영회 첫 장&lt;/title&gt;
+
+&lt;/head&gt;
+&lt;body&gt;
+
+
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&amp;display=swap&quot;&gt;
+&lt;style&gt;
+body{margin:0}
+a{color:#5FD4E0}a:hover{color:#A8EEF5}
+
+&lt;/style&gt;
+
+&lt;div style=&quot;width: 1440px; height: 720px; box-sizing: border-box; position: relative; overflow: hidden; background: #05080F; font-family: &#x27;Noto Sans KR&#x27;, sans-serif; color: #F6F3EC&quot;&gt;
+&lt;div style=&quot;position: absolute; left: 0; bottom: 0; width: 1440px; height: 6px; background: #5FD4E0; box-shadow: 0 0 40px 10px rgba(95,212,224,0.55)&quot;&gt;&lt;/div&gt;
+&lt;div style=&quot;position: absolute; left: 48px; top: 36px; right: 48px; display: flex; justify-content: space-between; align-items: center&quot;&gt;
+&lt;div style=&quot;display: flex; gap: 14px; align-items: center&quot;&gt;
+&lt;span style=&quot;font-size: 15px; font-weight: 700; color: #071019; background: #5FD4E0; border-radius: 999px; padding: 6px 14px&quot;&gt;도착 상영회&lt;/span&gt;
+&lt;span style=&quot;font-size: 16px; color: #B9C4D6&quot;&gt;오늘의 길&lt;/span&gt;
+&lt;/div&gt;
+&lt;div style=&quot;display: flex; gap: 8px&quot;&gt;
+&lt;span style=&quot;width: 36px; height: 6px; border-radius: 3px; background: linear-gradient(90deg, #F6F3EC 70%, rgba(246,243,236,0.25) 70%)&quot; title=&quot;오늘의 길&quot;&gt;&lt;/span&gt;
+&lt;span style=&quot;width: 36px; height: 6px; border-radius: 3px; background: rgba(246,243,236,0.25)&quot;&gt;&lt;/span&gt;&lt;span style=&quot;width: 36px; height: 6px; border-radius: 3px; background: rgba(246,243,236,0.25)&quot;&gt;&lt;/span&gt;&lt;span style=&quot;width: 36px; height: 6px; border-radius: 3px; background: rgba(246,243,236,0.25)&quot;&gt;&lt;/span&gt;&lt;span style=&quot;width: 36px; height: 6px; border-radius: 3px; background: rgba(246,243,236,0.25)&quot;&gt;&lt;/span&gt;&lt;span style=&quot;width: 36px; height: 6px; border-radius: 3px; background: rgba(246,243,236,0.25)&quot;&gt;&lt;/span&gt;&lt;span style=&quot;width: 36px; height: 6px; border-radius: 3px; background: rgba(246,243,236,0.25)&quot;&gt;&lt;/span&gt;&lt;span style=&quot;width: 36px; height: 6px; border-radius: 3px; background: rgba(246,243,236,0.25)&quot; title=&quot;영수증&quot;&gt;&lt;/span&gt;&lt;span style=&quot;width: 36px; height: 6px; border-radius: 3px; background: rgba(246,243,236,0.25)&quot; title=&quot;시상식&quot;&gt;&lt;/span&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div style=&quot;position: absolute; left: 48px; top: 120px; width: 800px&quot;&gt;
+&lt;svg role=&quot;img&quot; aria-label=&quot;서울에서 강릉까지 오늘 달린 길&quot; width=&quot;800&quot; height=&quot;567&quot; viewBox=&quot;-10 -50 480 340&quot; style=&quot;display:block;overflow:visible&quot;&gt;&lt;g stroke=&quot;#F6F3EC&quot; stroke-opacity=&quot;0.16&quot; stroke-width=&quot;13.440000000000001&quot; fill=&quot;none&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;&gt;&lt;path d=&quot;M16 210 L38 203 L58 208 L80 199 L102 204 L122 193&quot;/&gt;&lt;path d=&quot;M122 193 L146 180 L168 186 L190 171 L210 165 L232 154 L252 137 L270 131 L290 110 L308 102 L322 84 L334 72 L326 58 L340 46 L332 33 L348 24&quot;/&gt;&lt;path d=&quot;M348 24 L366 20 L384 26 L398 22&quot;/&gt;&lt;path d=&quot;M418 18 L428 16&quot;/&gt;&lt;path d=&quot;M428 16 L438 12 L448 8&quot;/&gt;&lt;/g&gt;&lt;path d=&quot;M16 210 L38 203 L58 208 L80 199 L102 204 L122 193&quot; stroke=&quot;#8C99B0&quot; stroke-width=&quot;4.2&quot; stroke-dasharray=&quot;2 7&quot; fill=&quot;none&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;/&gt;&lt;path d=&quot;M122 193 L146 180 L168 186 L190 171 L210 165 L232 154 L252 137 L270 131 L290 110 L308 102 L322 84 L334 72 L326 58 L340 46 L332 33 L348 24&quot; stroke=&quot;#F6F3EC&quot; stroke-width=&quot;4.2&quot; fill=&quot;none&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;/&gt;&lt;path d=&quot;M348 24 L366 20 L384 26 L398 22&quot; stroke=&quot;#5FD4E0&quot; stroke-width=&quot;4.2&quot; fill=&quot;none&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;/&gt;&lt;path d=&quot;M398 22 C 398 13, 413 11, 413 21 C 413 30, 400 31, 400 22 C 400 15, 411 13, 411 23 L 418 18&quot; stroke=&quot;#F2A541&quot; stroke-width=&quot;4.83&quot; fill=&quot;none&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;/&gt;&lt;path d=&quot;M418 18 L428 16&quot; stroke=&quot;#5FD4E0&quot; stroke-width=&quot;4.2&quot; fill=&quot;none&quot; stroke-linecap=&quot;round&quot;/&gt;&lt;path d=&quot;M428 16 L438 12 L448 8&quot; stroke=&quot;#7FA8F2&quot; stroke-width=&quot;4.2&quot; fill=&quot;none&quot; stroke-linecap=&quot;round&quot;/&gt;&lt;circle cx=&quot;16&quot; cy=&quot;210&quot; r=&quot;6.5&quot; fill=&quot;#05080F&quot; stroke=&quot;#F6F3EC&quot; stroke-width=&quot;2.5&quot;/&gt;&lt;text x=&quot;10&quot; y=&quot;230&quot; font-size=&quot;12.0&quot; fill=&quot;#B9C4D6&quot; font-family=&quot;Noto Sans KR, sans-serif&quot;&gt;서울 마포구&lt;/text&gt;&lt;circle cx=&quot;448&quot; cy=&quot;8&quot; r=&quot;6.5&quot; fill=&quot;#05080F&quot; stroke=&quot;#F6F3EC&quot; stroke-width=&quot;2.5&quot;/&gt;&lt;text x=&quot;460&quot; y=&quot;-6&quot; text-anchor=&quot;end&quot; font-size=&quot;12.0&quot; fill=&quot;#B9C4D6&quot; font-family=&quot;Noto Sans KR, sans-serif&quot;&gt;강원 강릉시&lt;/text&gt;&lt;line x1=&quot;406&quot; y1=&quot;30&quot; x2=&quot;388&quot; y2=&quot;138&quot; stroke=&quot;#F2A541&quot; stroke-width=&quot;1.4&quot; stroke-dasharray=&quot;3 4&quot;/&gt;&lt;circle cx=&quot;406&quot; cy=&quot;21&quot; r=&quot;13&quot; fill=&quot;none&quot; stroke=&quot;#F2A541&quot; stroke-width=&quot;1.4&quot; stroke-dasharray=&quot;3 4&quot;/&gt;&lt;circle cx=&quot;388&quot; cy=&quot;196&quot; r=&quot;58&quot; fill=&quot;#0B1424&quot; stroke=&quot;#F2A541&quot; stroke-width=&quot;1.6&quot;/&gt;&lt;g transform=&quot;translate(338 146)&quot;&gt;&lt;path d=&quot;M4 72 L20 64 C 14 44, 42 38, 43 56 C 44 72, 24 72, 27 56 C 30 40, 58 36, 58 54 C 58 72, 38 72, 42 56 C 46 40, 74 38, 73 56 C 72 72, 54 70, 58 58 L 96 40&quot; stroke=&quot;#F2A541&quot; stroke-width=&quot;3.2&quot; fill=&quot;none&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;/&gt;&lt;circle cx=&quot;42&quot; cy=&quot;56&quot; r=&quot;4&quot; fill=&quot;#F6F3EC&quot;/&gt;&lt;text x=&quot;42&quot; y=&quot;88&quot; text-anchor=&quot;middle&quot; font-size=&quot;9&quot; fill=&quot;#B9C4D6&quot; font-family=&quot;Noto Sans KR, sans-serif&quot;&gt;같은 사거리 3번&lt;/text&gt;&lt;/g&gt;&lt;rect x=&quot;326&quot; y=&quot;262&quot; width=&quot;124&quot; height=&quot;20.0&quot; rx=&quot;10.0&quot; fill=&quot;#F2A541&quot;/&gt;&lt;text x=&quot;388&quot; y=&quot;276.0&quot; text-anchor=&quot;middle&quot; font-size=&quot;12.0&quot; font-weight=&quot;700&quot; fill=&quot;#12203A&quot; font-family=&quot;Noto Sans KR, sans-serif&quot;&gt;뺑뺑이 3바퀴 · 확대&lt;/text&gt;&lt;circle cx=&quot;60&quot; cy=&quot;206&quot; r=&quot;7.0&quot; fill=&quot;#8C99B0&quot; stroke=&quot;#05080F&quot; stroke-width=&quot;2.5&quot;/&gt;&lt;circle cx=&quot;60&quot; cy=&quot;206&quot; r=&quot;2.4&quot; fill=&quot;#05080F&quot;/&gt;&lt;rect x=&quot;52&quot; y=&quot;240&quot; width=&quot;60.0&quot; height=&quot;20.0&quot; rx=&quot;10.0&quot; fill=&quot;#24365A&quot;/&gt;&lt;text x=&quot;82.0&quot; y=&quot;254.0&quot; text-anchor=&quot;middle&quot; font-size=&quot;12.0&quot; font-weight=&quot;700&quot; fill=&quot;#F6F3EC&quot; font-family=&quot;Noto Sans KR, sans-serif&quot;&gt;정체 35분&lt;/text&gt;&lt;circle cx=&quot;168&quot; cy=&quot;186&quot; r=&quot;7.0&quot; fill=&quot;#F28B6B&quot; stroke=&quot;#05080F&quot; stroke-width=&quot;2.5&quot;/&gt;&lt;circle cx=&quot;168&quot; cy=&quot;186&quot; r=&quot;2.4&quot; fill=&quot;#05080F&quot;/&gt;&lt;rect x=&quot;140&quot; y=&quot;148.0&quot; width=&quot;60.0&quot; height=&quot;20.0&quot; rx=&quot;10.0&quot; fill=&quot;#24365A&quot;/&gt;&lt;text x=&quot;170.0&quot; y=&quot;162.0&quot; text-anchor=&quot;middle&quot; font-size=&quot;12.0&quot; font-weight=&quot;700&quot; fill=&quot;#F6F3EC&quot; font-family=&quot;Noto Sans KR, sans-serif&quot;&gt;온도 전쟁&lt;/text&gt;&lt;circle cx=&quot;210&quot; cy=&quot;165&quot; r=&quot;4&quot; fill=&quot;#F6F3EC&quot;/&gt;&lt;rect x=&quot;214&quot; y=&quot;170&quot; width=&quot;66.0&quot; height=&quot;20.0&quot; rx=&quot;10.0&quot; fill=&quot;#12203A&quot;/&gt;&lt;text x=&quot;247.0&quot; y=&quot;184.0&quot; text-anchor=&quot;middle&quot; font-size=&quot;12.0&quot; font-weight=&quot;700&quot; fill=&quot;#B9C4D6&quot; font-family=&quot;Noto Sans KR, sans-serif&quot;&gt;휴게소 22분&lt;/text&gt;&lt;circle cx=&quot;366&quot; cy=&quot;20&quot; r=&quot;7.0&quot; fill=&quot;#5FD4E0&quot; stroke=&quot;#05080F&quot; stroke-width=&quot;2.5&quot;/&gt;&lt;circle cx=&quot;366&quot; cy=&quot;20&quot; r=&quot;2.4&quot; fill=&quot;#05080F&quot;/&gt;&lt;rect x=&quot;300&quot; y=&quot;30&quot; width=&quot;58.0&quot; height=&quot;20.0&quot; rx=&quot;10.0&quot; fill=&quot;#5FD4E0&quot;/&gt;&lt;text x=&quot;329.0&quot; y=&quot;44.0&quot; text-anchor=&quot;middle&quot; font-size=&quot;12.0&quot; font-weight=&quot;700&quot; fill=&quot;#071019&quot; font-family=&quot;Noto Sans KR, sans-serif&quot;&gt;즉흥 바다&lt;/text&gt;&lt;circle cx=&quot;438&quot; cy=&quot;12&quot; r=&quot;7.0&quot; fill=&quot;#7FA8F2&quot; stroke=&quot;#05080F&quot; stroke-width=&quot;2.5&quot;/&gt;&lt;circle cx=&quot;438&quot; cy=&quot;12&quot; r=&quot;2.4&quot; fill=&quot;#05080F&quot;/&gt;&lt;rect x=&quot;416&quot; y=&quot;-44&quot; width=&quot;44.0&quot; height=&quot;20.0&quot; rx=&quot;10.0&quot; fill=&quot;#7FA8F2&quot;/&gt;&lt;text x=&quot;438.0&quot; y=&quot;-30.0&quot; text-anchor=&quot;middle&quot; font-size=&quot;12.0&quot; font-weight=&quot;700&quot; fill=&quot;#071019&quot; font-family=&quot;Noto Sans KR, sans-serif&quot;&gt;소나기&lt;/text&gt;&lt;/svg&gt;
+&lt;/div&gt;
+&lt;div style=&quot;position: absolute; left: 920px; top: 104px; width: 472px; height: 560px; display: flex; flex-direction: column; gap: 18px&quot;&gt;
+&lt;div style=&quot;display: flex; flex-direction: column; gap: 6px&quot;&gt;
+&lt;span style=&quot;font-size: 16px; color: #A8EEF5; font-weight: 700&quot;&gt;2026.11.07 토&lt;/span&gt;
+&lt;h2 style=&quot;margin: 0; font-size: 40px; font-weight: 900; line-height: 1.2&quot;&gt;오늘의 길&lt;/h2&gt;
+&lt;span style=&quot;font-size: 17px; color: #B9C4D6&quot;&gt;서울 마포구 → 강원 강릉시&lt;/span&gt;
+&lt;/div&gt;
+&lt;div style=&quot;display: flex; gap: 28px&quot;&gt;
+&lt;div style=&quot;display: flex; flex-direction: column; gap: 4px&quot;&gt;&lt;span style=&quot;font-size: 30px; font-weight: 900; font-variant-numeric: tabular-nums&quot;&gt;4:02&lt;/span&gt;&lt;span style=&quot;font-size: 13px; color: #8C99B0&quot;&gt;함께 달린 시간&lt;/span&gt;&lt;/div&gt;
+&lt;div style=&quot;display: flex; flex-direction: column; gap: 4px&quot;&gt;&lt;span style=&quot;font-size: 30px; font-weight: 900; font-variant-numeric: tabular-nums&quot;&gt;231km&lt;/span&gt;&lt;span style=&quot;font-size: 13px; color: #8C99B0&quot;&gt;거리&lt;/span&gt;&lt;/div&gt;
+&lt;div style=&quot;display: flex; flex-direction: column; gap: 4px&quot;&gt;&lt;span style=&quot;font-size: 30px; font-weight: 900&quot;&gt;6&lt;/span&gt;&lt;span style=&quot;font-size: 13px; color: #8C99B0&quot;&gt;에피소드&lt;/span&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div style=&quot;display: flex; flex-direction: column; gap: 12px; background: #0E1828; border: 1px solid #1E2C46; border-radius: 20px; padding: 18px 20px&quot;&gt;
+&lt;div style=&quot;display: flex; gap: 12px; align-items: center&quot;&gt;&lt;span style=&quot;width: 14px; height: 14px; border-radius: 50%; background: #8C99B0; flex-shrink: 0&quot;&gt;&lt;/span&gt;&lt;span style=&quot;font-size: 14px; color: #8C99B0; width: 44px; font-variant-numeric: tabular-nums&quot;&gt;10:40&lt;/span&gt;&lt;span style=&quot;font-size: 18px; font-weight: 700&quot;&gt;정체 35분&lt;/span&gt;&lt;span style=&quot;font-size: 14px; color: #8C99B0&quot;&gt;거북이. 다 같이 버팀&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;display: flex; gap: 12px; align-items: center&quot;&gt;&lt;span style=&quot;width: 14px; height: 14px; border-radius: 50%; background: #F28B6B; flex-shrink: 0&quot;&gt;&lt;/span&gt;&lt;span style=&quot;font-size: 14px; color: #8C99B0; width: 44px; font-variant-numeric: tabular-nums&quot;&gt;10:52&lt;/span&gt;&lt;span style=&quot;font-size: 18px; font-weight: 700&quot;&gt;온도 전쟁&lt;/span&gt;&lt;span style=&quot;font-size: 14px; color: #8C99B0&quot;&gt;19도 vs 26도&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;display: flex; gap: 12px; align-items: center&quot;&gt;&lt;span style=&quot;width: 14px; height: 14px; border-radius: 50%; background: #F6F3EC; flex-shrink: 0&quot;&gt;&lt;/span&gt;&lt;span style=&quot;font-size: 14px; color: #8C99B0; width: 44px; font-variant-numeric: tabular-nums&quot;&gt;11:35&lt;/span&gt;&lt;span style=&quot;font-size: 18px; font-weight: 700&quot;&gt;휴게소 22분&lt;/span&gt;&lt;span style=&quot;font-size: 14px; color: #8C99B0&quot;&gt;시동을 꺼도 같은 여정&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;display: flex; gap: 12px; align-items: center&quot;&gt;&lt;span style=&quot;width: 14px; height: 14px; border-radius: 50%; background: #5FD4E0; flex-shrink: 0&quot;&gt;&lt;/span&gt;&lt;span style=&quot;font-size: 14px; color: #8C99B0; width: 44px; font-variant-numeric: tabular-nums&quot;&gt;12:31&lt;/span&gt;&lt;span style=&quot;font-size: 18px; font-weight: 700&quot;&gt;즉흥 바다&lt;/span&gt;&lt;span style=&quot;font-size: 14px; color: #8C99B0&quot;&gt;카페 대신 안목해변&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;display: flex; gap: 12px; align-items: center&quot;&gt;&lt;span style=&quot;width: 14px; height: 14px; border-radius: 50%; background: #F2A541; flex-shrink: 0&quot;&gt;&lt;/span&gt;&lt;span style=&quot;font-size: 14px; color: #8C99B0; width: 44px; font-variant-numeric: tabular-nums&quot;&gt;12:58&lt;/span&gt;&lt;span style=&quot;font-size: 18px; font-weight: 700&quot;&gt;뺑뺑이 3바퀴&lt;/span&gt;&lt;span style=&quot;font-size: 14px; color: #8C99B0&quot;&gt;★ 오늘의 순간&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;display: flex; gap: 12px; align-items: center&quot;&gt;&lt;span style=&quot;width: 14px; height: 14px; border-radius: 50%; background: #7FA8F2; flex-shrink: 0&quot;&gt;&lt;/span&gt;&lt;span style=&quot;font-size: 14px; color: #8C99B0; width: 44px; font-variant-numeric: tabular-nums&quot;&gt;13:22&lt;/span&gt;&lt;span style=&quot;font-size: 18px; font-weight: 700&quot;&gt;소나기&lt;/span&gt;&lt;span style=&quot;font-size: 14px; color: #8C99B0&quot;&gt;와이퍼 최고속 7분&lt;/span&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div style=&quot;flex: 1&quot;&gt;&lt;/div&gt;
+&lt;div style=&quot;display: flex; gap: 12px&quot;&gt;
+&lt;button style=&quot;height: 60px; flex: 1; border-radius: 18px; border: 2px solid #3A4F78; background: transparent; color: #F6F3EC; font-family: &#x27;Noto Sans KR&#x27;, sans-serif; font-size: 19px; font-weight: 700&quot;&gt;건너뛰기&lt;/button&gt;
+&lt;button style=&quot;height: 60px; flex: 1.4; border-radius: 18px; border: none; background: #5FD4E0; color: #071019; font-family: &#x27;Noto Sans KR&#x27;, sans-serif; font-size: 19px; font-weight: 700&quot;&gt;다음 · 정체 35분&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p style=&quot;position: absolute; left: 48px; bottom: 24px; margin: 0; font-size: 15px; color: #8C99B0&quot;&gt;경로가 2초 동안 그려지고 핀이 시간순으로 뜸 · 선 색은 속도가 아니라 에피소드 · 출발·도착 1km는 가림 · 배경 지도 없음&lt;/p&gt;
+&lt;/div&gt;
+
+
+&lt;/body&gt;
+&lt;/html&gt;
+"></iframe></div></section>
+<section><h2>8b. 오늘의 길: 경로형 공유 이미지 (9:16) · PT</h2><div class="fit" data-w="540" data-h="960"><iframe title="8b. 오늘의 길: 경로형 공유 이미지 (9:16) · PT" width="540" height="960" srcdoc="&lt;!doctype html&gt;
+&lt;html lang=&quot;ko&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;title&gt;오늘의 길 공유 이미지&lt;/title&gt;
+
+&lt;/head&gt;
+&lt;body&gt;
+
+
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&amp;display=swap&quot;&gt;
+&lt;style&gt;
+body{margin:0}
+a{color:#5FD4E0}a:hover{color:#A8EEF5}
+.st{display:flex;flex-direction:column;gap:6px}.sv{font-size:34px;font-weight:900;line-height:1;font-variant-numeric:tabular-nums}.sl{font-size:13px;color:#8C99B0;display:flex;align-items:center;gap:6px}
+&lt;/style&gt;
+
+&lt;div style=&quot;width: 540px; height: 960px; box-sizing: border-box; position: relative; overflow: hidden; font-family: &#x27;Noto Sans KR&#x27;, sans-serif; color: #F6F3EC; background: #05080F&quot;&gt;
+&lt;div style=&quot;position: absolute; left: 36px; top: 44px; width: 468px; display: flex; flex-direction: column; gap: 8px&quot;&gt;
+&lt;span style=&quot;font-size: 14px; font-weight: 700; letter-spacing: 1px; color: #A8EEF5&quot;&gt;2026.11.07 토 · 오늘의 길&lt;/span&gt;
+&lt;h1 style=&quot;margin: 0; font-size: 40px; font-weight: 900; line-height: 1.15&quot;&gt;바다로 새 버린 주말&lt;/h1&gt;
+&lt;/div&gt;
+&lt;div style=&quot;position: absolute; left: 36px; top: 200px; width: 468px&quot;&gt;
+&lt;svg role=&quot;img&quot; aria-label=&quot;서울에서 강릉까지 오늘 달린 길&quot; width=&quot;468&quot; height=&quot;332&quot; viewBox=&quot;-10 -50 480 340&quot; style=&quot;display:block;overflow:visible&quot;&gt;&lt;g stroke=&quot;#F6F3EC&quot; stroke-opacity=&quot;0.16&quot; stroke-width=&quot;13.440000000000001&quot; fill=&quot;none&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;&gt;&lt;path d=&quot;M16 210 L38 203 L58 208 L80 199 L102 204 L122 193&quot;/&gt;&lt;path d=&quot;M122 193 L146 180 L168 186 L190 171 L210 165 L232 154 L252 137 L270 131 L290 110 L308 102 L322 84 L334 72 L326 58 L340 46 L332 33 L348 24&quot;/&gt;&lt;path d=&quot;M348 24 L366 20 L384 26 L398 22&quot;/&gt;&lt;path d=&quot;M418 18 L428 16&quot;/&gt;&lt;path d=&quot;M428 16 L438 12 L448 8&quot;/&gt;&lt;/g&gt;&lt;path d=&quot;M16 210 L38 203 L58 208 L80 199 L102 204 L122 193&quot; stroke=&quot;#8C99B0&quot; stroke-width=&quot;4.2&quot; stroke-dasharray=&quot;2 7&quot; fill=&quot;none&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;/&gt;&lt;path d=&quot;M122 193 L146 180 L168 186 L190 171 L210 165 L232 154 L252 137 L270 131 L290 110 L308 102 L322 84 L334 72 L326 58 L340 46 L332 33 L348 24&quot; stroke=&quot;#F6F3EC&quot; stroke-width=&quot;4.2&quot; fill=&quot;none&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;/&gt;&lt;path d=&quot;M348 24 L366 20 L384 26 L398 22&quot; stroke=&quot;#5FD4E0&quot; stroke-width=&quot;4.2&quot; fill=&quot;none&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;/&gt;&lt;path d=&quot;M398 22 C 398 13, 413 11, 413 21 C 413 30, 400 31, 400 22 C 400 15, 411 13, 411 23 L 418 18&quot; stroke=&quot;#F2A541&quot; stroke-width=&quot;4.83&quot; fill=&quot;none&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;/&gt;&lt;path d=&quot;M418 18 L428 16&quot; stroke=&quot;#5FD4E0&quot; stroke-width=&quot;4.2&quot; fill=&quot;none&quot; stroke-linecap=&quot;round&quot;/&gt;&lt;path d=&quot;M428 16 L438 12 L448 8&quot; stroke=&quot;#7FA8F2&quot; stroke-width=&quot;4.2&quot; fill=&quot;none&quot; stroke-linecap=&quot;round&quot;/&gt;&lt;circle cx=&quot;16&quot; cy=&quot;210&quot; r=&quot;6.5&quot; fill=&quot;#05080F&quot; stroke=&quot;#F6F3EC&quot; stroke-width=&quot;2.5&quot;/&gt;&lt;text x=&quot;10&quot; y=&quot;230&quot; font-size=&quot;12.0&quot; fill=&quot;#B9C4D6&quot; font-family=&quot;Noto Sans KR, sans-serif&quot;&gt;서울 마포구&lt;/text&gt;&lt;circle cx=&quot;448&quot; cy=&quot;8&quot; r=&quot;6.5&quot; fill=&quot;#05080F&quot; stroke=&quot;#F6F3EC&quot; stroke-width=&quot;2.5&quot;/&gt;&lt;text x=&quot;460&quot; y=&quot;-6&quot; text-anchor=&quot;end&quot; font-size=&quot;12.0&quot; fill=&quot;#B9C4D6&quot; font-family=&quot;Noto Sans KR, sans-serif&quot;&gt;강원 강릉시&lt;/text&gt;&lt;line x1=&quot;406&quot; y1=&quot;30&quot; x2=&quot;388&quot; y2=&quot;138&quot; stroke=&quot;#F2A541&quot; stroke-width=&quot;1.4&quot; stroke-dasharray=&quot;3 4&quot;/&gt;&lt;circle cx=&quot;406&quot; cy=&quot;21&quot; r=&quot;13&quot; fill=&quot;none&quot; stroke=&quot;#F2A541&quot; stroke-width=&quot;1.4&quot; stroke-dasharray=&quot;3 4&quot;/&gt;&lt;circle cx=&quot;388&quot; cy=&quot;196&quot; r=&quot;58&quot; fill=&quot;#0B1424&quot; stroke=&quot;#F2A541&quot; stroke-width=&quot;1.6&quot;/&gt;&lt;g transform=&quot;translate(338 146)&quot;&gt;&lt;path d=&quot;M4 72 L20 64 C 14 44, 42 38, 43 56 C 44 72, 24 72, 27 56 C 30 40, 58 36, 58 54 C 58 72, 38 72, 42 56 C 46 40, 74 38, 73 56 C 72 72, 54 70, 58 58 L 96 40&quot; stroke=&quot;#F2A541&quot; stroke-width=&quot;3.2&quot; fill=&quot;none&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;/&gt;&lt;circle cx=&quot;42&quot; cy=&quot;56&quot; r=&quot;4&quot; fill=&quot;#F6F3EC&quot;/&gt;&lt;text x=&quot;42&quot; y=&quot;88&quot; text-anchor=&quot;middle&quot; font-size=&quot;9&quot; fill=&quot;#B9C4D6&quot; font-family=&quot;Noto Sans KR, sans-serif&quot;&gt;같은 사거리 3번&lt;/text&gt;&lt;/g&gt;&lt;rect x=&quot;326&quot; y=&quot;262&quot; width=&quot;124&quot; height=&quot;20.0&quot; rx=&quot;10.0&quot; fill=&quot;#F2A541&quot;/&gt;&lt;text x=&quot;388&quot; y=&quot;276.0&quot; text-anchor=&quot;middle&quot; font-size=&quot;12.0&quot; font-weight=&quot;700&quot; fill=&quot;#12203A&quot; font-family=&quot;Noto Sans KR, sans-serif&quot;&gt;뺑뺑이 3바퀴 · 확대&lt;/text&gt;&lt;circle cx=&quot;60&quot; cy=&quot;206&quot; r=&quot;7.0&quot; fill=&quot;#8C99B0&quot; stroke=&quot;#05080F&quot; stroke-width=&quot;2.5&quot;/&gt;&lt;circle cx=&quot;60&quot; cy=&quot;206&quot; r=&quot;2.4&quot; fill=&quot;#05080F&quot;/&gt;&lt;rect x=&quot;52&quot; y=&quot;240&quot; width=&quot;60.0&quot; height=&quot;20.0&quot; rx=&quot;10.0&quot; fill=&quot;#24365A&quot;/&gt;&lt;text x=&quot;82.0&quot; y=&quot;254.0&quot; text-anchor=&quot;middle&quot; font-size=&quot;12.0&quot; font-weight=&quot;700&quot; fill=&quot;#F6F3EC&quot; font-family=&quot;Noto Sans KR, sans-serif&quot;&gt;정체 35분&lt;/text&gt;&lt;circle cx=&quot;168&quot; cy=&quot;186&quot; r=&quot;7.0&quot; fill=&quot;#F28B6B&quot; stroke=&quot;#05080F&quot; stroke-width=&quot;2.5&quot;/&gt;&lt;circle cx=&quot;168&quot; cy=&quot;186&quot; r=&quot;2.4&quot; fill=&quot;#05080F&quot;/&gt;&lt;rect x=&quot;140&quot; y=&quot;148.0&quot; width=&quot;60.0&quot; height=&quot;20.0&quot; rx=&quot;10.0&quot; fill=&quot;#24365A&quot;/&gt;&lt;text x=&quot;170.0&quot; y=&quot;162.0&quot; text-anchor=&quot;middle&quot; font-size=&quot;12.0&quot; font-weight=&quot;700&quot; fill=&quot;#F6F3EC&quot; font-family=&quot;Noto Sans KR, sans-serif&quot;&gt;온도 전쟁&lt;/text&gt;&lt;circle cx=&quot;210&quot; cy=&quot;165&quot; r=&quot;4&quot; fill=&quot;#F6F3EC&quot;/&gt;&lt;rect x=&quot;214&quot; y=&quot;170&quot; width=&quot;66.0&quot; height=&quot;20.0&quot; rx=&quot;10.0&quot; fill=&quot;#12203A&quot;/&gt;&lt;text x=&quot;247.0&quot; y=&quot;184.0&quot; text-anchor=&quot;middle&quot; font-size=&quot;12.0&quot; font-weight=&quot;700&quot; fill=&quot;#B9C4D6&quot; font-family=&quot;Noto Sans KR, sans-serif&quot;&gt;휴게소 22분&lt;/text&gt;&lt;circle cx=&quot;366&quot; cy=&quot;20&quot; r=&quot;7.0&quot; fill=&quot;#5FD4E0&quot; stroke=&quot;#05080F&quot; stroke-width=&quot;2.5&quot;/&gt;&lt;circle cx=&quot;366&quot; cy=&quot;20&quot; r=&quot;2.4&quot; fill=&quot;#05080F&quot;/&gt;&lt;rect x=&quot;300&quot; y=&quot;30&quot; width=&quot;58.0&quot; height=&quot;20.0&quot; rx=&quot;10.0&quot; fill=&quot;#5FD4E0&quot;/&gt;&lt;text x=&quot;329.0&quot; y=&quot;44.0&quot; text-anchor=&quot;middle&quot; font-size=&quot;12.0&quot; font-weight=&quot;700&quot; fill=&quot;#071019&quot; font-family=&quot;Noto Sans KR, sans-serif&quot;&gt;즉흥 바다&lt;/text&gt;&lt;circle cx=&quot;438&quot; cy=&quot;12&quot; r=&quot;7.0&quot; fill=&quot;#7FA8F2&quot; stroke=&quot;#05080F&quot; stroke-width=&quot;2.5&quot;/&gt;&lt;circle cx=&quot;438&quot; cy=&quot;12&quot; r=&quot;2.4&quot; fill=&quot;#05080F&quot;/&gt;&lt;rect x=&quot;416&quot; y=&quot;-44&quot; width=&quot;44.0&quot; height=&quot;20.0&quot; rx=&quot;10.0&quot; fill=&quot;#7FA8F2&quot;/&gt;&lt;text x=&quot;438.0&quot; y=&quot;-30.0&quot; text-anchor=&quot;middle&quot; font-size=&quot;12.0&quot; font-weight=&quot;700&quot; fill=&quot;#071019&quot; font-family=&quot;Noto Sans KR, sans-serif&quot;&gt;소나기&lt;/text&gt;&lt;/svg&gt;
+&lt;/div&gt;
+&lt;div style=&quot;position: absolute; left: 36px; top: 608px; width: 468px&quot;&gt;
+&lt;div style=&quot;display: flex; flex-wrap: wrap; gap: 8px 16px; font-size: 13px; color: #B9C4D6&quot;&gt;
+&lt;span style=&quot;display: inline-flex; align-items: center; gap: 6px&quot;&gt;&lt;svg width=&quot;22&quot; height=&quot;6&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M2 3 H20&quot; stroke=&quot;#8C99B0&quot; stroke-width=&quot;4&quot; stroke-dasharray=&quot;2 5&quot; stroke-linecap=&quot;round&quot;/&gt;&lt;/svg&gt;정체&lt;/span&gt;
+&lt;span style=&quot;display: inline-flex; align-items: center; gap: 6px&quot;&gt;&lt;svg width=&quot;22&quot; height=&quot;6&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M2 3 H20&quot; stroke=&quot;#5FD4E0&quot; stroke-width=&quot;4&quot; stroke-linecap=&quot;round&quot;/&gt;&lt;/svg&gt;즉흥으로 튼 길&lt;/span&gt;
+&lt;span style=&quot;display: inline-flex; align-items: center; gap: 6px&quot;&gt;&lt;svg width=&quot;22&quot; height=&quot;6&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M2 3 H20&quot; stroke=&quot;#F2A541&quot; stroke-width=&quot;4&quot; stroke-linecap=&quot;round&quot;/&gt;&lt;/svg&gt;뺑뺑이&lt;/span&gt;
+&lt;span style=&quot;display: inline-flex; align-items: center; gap: 6px&quot;&gt;&lt;svg width=&quot;22&quot; height=&quot;6&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M2 3 H20&quot; stroke=&quot;#7FA8F2&quot; stroke-width=&quot;4&quot; stroke-linecap=&quot;round&quot;/&gt;&lt;/svg&gt;소나기&lt;/span&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div style=&quot;position: absolute; left: 36px; top: 690px; width: 468px; display: flex; justify-content: space-between&quot;&gt;
+&lt;div class=&quot;st&quot;&gt;&lt;span class=&quot;sv&quot;&gt;4:02&lt;/span&gt;&lt;span class=&quot;sl&quot;&gt;&lt;svg width=&quot;22&quot; height=&quot;22&quot; viewBox=&quot;0 0 24 24&quot; aria-hidden=&quot;true&quot;&gt;&lt;circle cx=&quot;12&quot; cy=&quot;13&quot; r=&quot;8&quot; fill=&quot;none&quot; stroke=&quot;#F6F3EC&quot; stroke-width=&quot;2&quot;/&gt;&lt;path d=&quot;M12 9 V13 L15 15 M10 3 H14&quot; stroke=&quot;#F6F3EC&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot;/&gt;&lt;/svg&gt;함께 달린 시간&lt;/span&gt;&lt;/div&gt;
+&lt;div class=&quot;st&quot;&gt;&lt;span class=&quot;sv&quot;&gt;231km&lt;/span&gt;&lt;span class=&quot;sl&quot;&gt;&lt;svg width=&quot;22&quot; height=&quot;22&quot; viewBox=&quot;0 0 24 24&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M8 21 L10 3 M16 21 L14 3&quot; stroke=&quot;#F6F3EC&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot;/&gt;&lt;path d=&quot;M12 6 V8 M12 11 V13 M12 16 V18&quot; stroke=&quot;#F2A541&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot;/&gt;&lt;/svg&gt;거리&lt;/span&gt;&lt;/div&gt;
+&lt;div class=&quot;st&quot;&gt;&lt;span class=&quot;sv&quot;&gt;6&lt;/span&gt;&lt;span class=&quot;sl&quot;&gt;&lt;svg width=&quot;22&quot; height=&quot;22&quot; viewBox=&quot;0 0 24 24&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M12 3 L14.6 9 L21 9.5 L16 13.6 L17.6 20 L12 16.6 L6.4 20 L8 13.6 L3 9.5 L9.4 9 Z&quot; fill=&quot;none&quot; stroke=&quot;#F6F3EC&quot; stroke-width=&quot;2&quot; stroke-linejoin=&quot;round&quot;/&gt;&lt;/svg&gt;에피소드&lt;/span&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div style=&quot;position: absolute; left: 36px; top: 800px; width: 468px; display: flex; gap: 8px&quot;&gt;
+&lt;span style=&quot;font-size: 13px; font-weight: 700; color: #12203A; background: #F2A541; border-radius: 999px; padding: 5px 12px&quot;&gt;길치상&lt;/span&gt;
+&lt;span style=&quot;font-size: 13px; font-weight: 700; color: #A8620A; background: #F6F3EC; border-radius: 999px; padding: 5px 12px&quot;&gt;지각 +52분&lt;/span&gt;
+&lt;span style=&quot;font-size: 13px; color: #B9C4D6; border: 1px solid #24365A; border-radius: 999px; padding: 4px 12px&quot;&gt;4명이 함께&lt;/span&gt;
+&lt;/div&gt;
+&lt;div style=&quot;position: absolute; left: 36px; bottom: 36px; width: 468px; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(246,243,236,0.2); padding-top: 14px&quot;&gt;
+&lt;span style=&quot;font-size: 14px; font-weight: 700&quot;&gt;Car Buddy&lt;/span&gt;
+&lt;span style=&quot;font-size: 12px; color: #8C99B0&quot;&gt;출발·도착 1km는 가렸어요 · Pleos Connect&lt;/span&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+
+&lt;/body&gt;
+&lt;/html&gt;
+"></iframe></div></section>
+<section><h2>9a. 여정 중 화면: 정차(P) 모드 + 중간 상영 제안</h2><div class="fit" data-w="1440" data-h="720"><iframe title="9a. 여정 중 화면: 정차(P) 모드 + 중간 상영 제안" width="1440" height="720" srcdoc="&lt;!doctype html&gt;
+&lt;html lang=&quot;ko&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;title&gt;여정 중 화면 정차 모드와 중간 상영 제안&lt;/title&gt;
+
+&lt;/head&gt;
+&lt;body&gt;
+
+
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&amp;display=swap&quot;&gt;
+&lt;style&gt;
+body{margin:0}
+a{color:#5FD4E0}a:hover{color:#A8EEF5}
+.ep{display:flex;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid #1E2C46}
+.ic{width:34px;height:34px;border-radius:10px;background:#1B2D4F;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.bt{height:60px;border-radius:18px;font-family:&#x27;Noto Sans KR&#x27;,sans-serif;font-size:18px;font-weight:700}
+&lt;/style&gt;
+
+&lt;div style=&quot;width: 1440px; height: 720px; box-sizing: border-box; padding: 32px 44px; background: #05080F; font-family: &#x27;Noto Sans KR&#x27;, sans-serif; color: #F6F3EC; display: flex; gap: 36px; position: relative&quot;&gt;
+&lt;div style=&quot;width: 760px; display: flex; flex-direction: column; gap: 14px&quot;&gt;
+&lt;div style=&quot;display: flex; gap: 12px; align-items: center&quot;&gt;
+&lt;span style=&quot;font-size: 15px; color: #B9C4D6; border: 1px solid #24365A; border-radius: 12px; padding: 6px 12px&quot;&gt;← 홈&lt;/span&gt;
+&lt;span style=&quot;font-size: 14px; font-weight: 700; color: #071019; background: #5FD4E0; border-radius: 999px; padding: 5px 12px&quot;&gt;여정 중&lt;/span&gt;
+&lt;/div&gt;
+&lt;h1 style=&quot;margin: 4px 0 0; font-size: 34px; font-weight: 900&quot;&gt;잠깐 쉬는 중 · 21분째&lt;/h1&gt;
+&lt;span style=&quot;font-size: 17px; color: #B9C4D6&quot;&gt;출발한 지 1시간 56분 · 128km&lt;/span&gt;
+&lt;div style=&quot;flex: 1; background: #0B1424; border: 1px solid #1E2C46; border-radius: 24px; position: relative; overflow: hidden; display: flex; align-items: flex-start; justify-content: center&quot;&gt;&lt;svg role=&quot;img&quot; aria-label=&quot;지금까지 달린 길&quot; width=&quot;700&quot; height=&quot;330&quot; viewBox=&quot;0 0 480 226&quot;&gt;
+&lt;g fill=&quot;none&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;&gt;
+&lt;path d=&quot;M20 190 L42 183 L62 188 L84 179 L106 184 L126 173&quot; stroke=&quot;#8C99B0&quot; stroke-width=&quot;5&quot; stroke-dasharray=&quot;2 8&quot;/&gt;
+&lt;path d=&quot;M126 173 L150 160 L172 166 L194 151 L214 145 L236 134 L256 117 L274 111&quot; stroke=&quot;#F6F3EC&quot; stroke-width=&quot;5&quot;/&gt;
+&lt;path d=&quot;M274 111 L300 90 L330 80 L360 58 L400 36 L440 16&quot; stroke=&quot;#F6F3EC&quot; stroke-opacity=&quot;0.18&quot; stroke-width=&quot;5&quot; stroke-dasharray=&quot;3 9&quot;/&gt;
+&lt;/g&gt;
+&lt;circle cx=&quot;20&quot; cy=&quot;190&quot; r=&quot;7&quot; fill=&quot;#05080F&quot; stroke=&quot;#F6F3EC&quot; stroke-width=&quot;2.5&quot;/&gt;
+&lt;text x=&quot;12&quot; y=&quot;214&quot; font-size=&quot;13&quot; fill=&quot;#B9C4D6&quot; font-family=&quot;Noto Sans KR, sans-serif&quot;&gt;서울 마포구&lt;/text&gt;
+&lt;circle cx=&quot;64&quot; cy=&quot;186&quot; r=&quot;7&quot; fill=&quot;#8C99B0&quot; stroke=&quot;#05080F&quot; stroke-width=&quot;2.5&quot;/&gt;
+&lt;text x=&quot;52&quot; y=&quot;168&quot; font-size=&quot;12&quot; fill=&quot;#B9C4D6&quot; font-family=&quot;Noto Sans KR, sans-serif&quot;&gt;정체&lt;/text&gt;
+&lt;circle cx=&quot;172&quot; cy=&quot;166&quot; r=&quot;7&quot; fill=&quot;#F28B6B&quot; stroke=&quot;#05080F&quot; stroke-width=&quot;2.5&quot;/&gt;
+&lt;text x=&quot;150&quot; y=&quot;148&quot; font-size=&quot;12&quot; fill=&quot;#B9C4D6&quot; font-family=&quot;Noto Sans KR, sans-serif&quot;&gt;온도 전쟁&lt;/text&gt;
+&lt;circle cx=&quot;274&quot; cy=&quot;111&quot; r=&quot;11&quot; fill=&quot;#5FD4E0&quot; fill-opacity=&quot;0.25&quot;/&gt;&lt;circle cx=&quot;274&quot; cy=&quot;111&quot; r=&quot;6&quot; fill=&quot;#5FD4E0&quot;/&gt;
+&lt;text x=&quot;290&quot; y=&quot;116&quot; font-size=&quot;14&quot; font-weight=&quot;700&quot; fill=&quot;#5FD4E0&quot; font-family=&quot;Noto Sans KR, sans-serif&quot;&gt;지금 여기&lt;/text&gt;
+&lt;text x=&quot;440&quot; y=&quot;34&quot; text-anchor=&quot;end&quot; font-size=&quot;13&quot; fill=&quot;#8C99B0&quot; font-family=&quot;Noto Sans KR, sans-serif&quot;&gt;강릉까지 남은 길&lt;/text&gt;
+&lt;/svg&gt;
+&lt;div style=&quot;position: absolute; left: 20px; right: 20px; bottom: 20px; box-sizing: border-box; background: #1B2D4F; border: 1px solid #3A4F78; border-radius: 24px; padding: 18px 20px; display: flex; gap: 16px; align-items: center; box-shadow: 0 18px 40px rgba(0,0,0,0.5)&quot;&gt;
+&lt;svg role=&quot;img&quot; aria-label=&quot;버디&quot; width=&quot;64&quot; height=&quot;64&quot; viewBox=&quot;0 0 84 84&quot; style=&quot;flex-shrink: 0&quot;&gt;&lt;ellipse cx=&quot;42&quot; cy=&quot;48&quot; rx=&quot;32&quot; ry=&quot;30&quot; fill=&quot;#F6F3EC&quot;/&gt;&lt;circle cx=&quot;32&quot; cy=&quot;44&quot; r=&quot;4&quot; fill=&quot;#12203A&quot;/&gt;&lt;circle cx=&quot;52&quot; cy=&quot;44&quot; r=&quot;4&quot; fill=&quot;#12203A&quot;/&gt;&lt;path d=&quot;M36 54 Q42 58 48 54&quot; stroke=&quot;#12203A&quot; stroke-width=&quot;2.5&quot; fill=&quot;none&quot; stroke-linecap=&quot;round&quot;/&gt;&lt;/svg&gt;
+&lt;div style=&quot;flex: 1; display: flex; flex-direction: column; gap: 4px&quot;&gt;&lt;span style=&quot;font-size: 22px; font-weight: 900&quot;&gt;쉬는 동안 지금까지 볼래?&lt;/span&gt;&lt;span style=&quot;font-size: 15px; color: #B9C4D6&quot;&gt;20초면 돼. 나머지는 도착해서.&lt;/span&gt;&lt;/div&gt;
+&lt;button class=&quot;bt&quot; style=&quot;width: 124px; border: 2px solid #3A4F78; background: transparent; color: #F6F3EC&quot;&gt;나중에&lt;/button&gt;
+&lt;button class=&quot;bt&quot; style=&quot;width: 124px; border: none; background: #5FD4E0; color: #071019&quot;&gt;보기&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div style=&quot;flex: 1; display: flex; flex-direction: column; gap: 12px&quot;&gt;
+&lt;span style=&quot;font-size: 15px; font-weight: 700; color: #F2A541; margin-top: 62px&quot;&gt;에피소드 3개 기억 중&lt;/span&gt;
+&lt;div style=&quot;display: flex; flex-direction: column&quot;&gt;
+&lt;div class=&quot;ep&quot;&gt;&lt;span class=&quot;ic&quot;&gt;&lt;svg width=&quot;18&quot; height=&quot;18&quot; viewBox=&quot;0 0 20 20&quot; aria-hidden=&quot;true&quot;&gt;&lt;circle cx=&quot;6&quot; cy=&quot;6&quot; r=&quot;2.4&quot; fill=&quot;#B9C4D6&quot;/&gt;&lt;circle cx=&quot;14&quot; cy=&quot;6&quot; r=&quot;2.4&quot; fill=&quot;#B9C4D6&quot;/&gt;&lt;circle cx=&quot;6&quot; cy=&quot;14&quot; r=&quot;2.4&quot; fill=&quot;#B9C4D6&quot;/&gt;&lt;circle cx=&quot;14&quot; cy=&quot;14&quot; r=&quot;2.4&quot; fill=&quot;#B9C4D6&quot;/&gt;&lt;/svg&gt;&lt;/span&gt;&lt;span style=&quot;font-size: 14px; color: #8C99B0; width: 46px&quot;&gt;10:00&lt;/span&gt;&lt;span style=&quot;font-size: 18px; font-weight: 700&quot;&gt;4명 꽉 참&lt;/span&gt;&lt;/div&gt;
+&lt;div class=&quot;ep&quot;&gt;&lt;span class=&quot;ic&quot;&gt;&lt;svg width=&quot;18&quot; height=&quot;18&quot; viewBox=&quot;0 0 20 20&quot; aria-hidden=&quot;true&quot;&gt;&lt;rect x=&quot;2&quot; y=&quot;8&quot; width=&quot;7&quot; height=&quot;5&quot; rx=&quot;1.5&quot; fill=&quot;#B9C4D6&quot;/&gt;&lt;rect x=&quot;11&quot; y=&quot;8&quot; width=&quot;7&quot; height=&quot;5&quot; rx=&quot;1.5&quot; fill=&quot;#B9C4D6&quot;/&gt;&lt;/svg&gt;&lt;/span&gt;&lt;span style=&quot;font-size: 14px; color: #8C99B0; width: 46px&quot;&gt;10:40&lt;/span&gt;&lt;span style=&quot;font-size: 18px; font-weight: 700&quot;&gt;정체 35분&lt;/span&gt;&lt;/div&gt;
+&lt;div class=&quot;ep&quot;&gt;&lt;span class=&quot;ic&quot;&gt;&lt;svg width=&quot;18&quot; height=&quot;18&quot; viewBox=&quot;0 0 20 20&quot; aria-hidden=&quot;true&quot;&gt;&lt;rect x=&quot;8&quot; y=&quot;2&quot; width=&quot;4&quot; height=&quot;11&quot; rx=&quot;2&quot; fill=&quot;none&quot; stroke=&quot;#F28B6B&quot; stroke-width=&quot;2&quot;/&gt;&lt;circle cx=&quot;10&quot; cy=&quot;15&quot; r=&quot;3.2&quot; fill=&quot;#F28B6B&quot;/&gt;&lt;/svg&gt;&lt;/span&gt;&lt;span style=&quot;font-size: 14px; color: #8C99B0; width: 46px&quot;&gt;10:52&lt;/span&gt;&lt;span style=&quot;font-size: 18px; font-weight: 700&quot;&gt;19도 vs 26도&lt;/span&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;span style=&quot;font-size: 13px; color: #8C99B0&quot;&gt;도착하면 상영회에서 마저 보여 줄게.&lt;/span&gt;
+&lt;div style=&quot;display: flex; gap: 10px; align-items: center; margin-top: 2px&quot;&gt;
+&lt;span style=&quot;font-size: 14px; color: #B9C4D6&quot;&gt;함께 탄 사람&lt;/span&gt;
+&lt;span style=&quot;font-size: 14px; font-weight: 700; color: #071019; background: #3FA7A3; border-radius: 999px; padding: 5px 12px&quot;&gt;최소 4명&lt;/span&gt;
+&lt;span style=&quot;margin-left: auto; font-size: 14px; font-weight: 700; color: #B9C4D6; border: 2px solid #3A4F78; border-radius: 14px; padding: 8px 14px&quot;&gt;같이 탈 사람 초대 · 준비 중&lt;/span&gt;
+&lt;/div&gt;
+&lt;div style=&quot;flex: 1&quot;&gt;&lt;/div&gt;
+&lt;button class=&quot;bt&quot; style=&quot;border: none; background: #5FD4E0; color: #071019&quot;&gt;지금까지 보기&lt;/button&gt;
+&lt;button class=&quot;bt&quot; style=&quot;height: 56px; border: 2px solid #3A4F78; background: transparent; color: #F6F3EC&quot;&gt;지금 기억해&lt;/button&gt;
+&lt;div style=&quot;display: flex; gap: 12px&quot;&gt;
+&lt;button class=&quot;bt&quot; style=&quot;height: 56px; flex: 1; font-size: 17px; border: 2px solid #3A4F78; background: transparent; color: #F6F3EC&quot;&gt;여기서 끝내기&lt;/button&gt;
+&lt;button class=&quot;bt&quot; style=&quot;height: 56px; flex: 1; font-size: 17px; border: none; background: transparent; color: #B9C4D6&quot;&gt;기록 멈추기&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p style=&quot;position: absolute; left: 44px; bottom: 8px; margin: 0; font-size: 13px; color: #8C99B0&quot;&gt;V10 정차 모드 · P에서만 · 5분 이상 쉬고 운전석 벨트를 다시 매면 제안 카드가 뜸(여정당 1회, 자동 재생 없음, 기어 D면 사라짐) · [지금까지 보기]는 언제든&lt;/p&gt;
+&lt;/div&gt;
+
+
+&lt;/body&gt;
+&lt;/html&gt;
+"></iframe></div></section>
+<section><h2>9b. 여정 중 화면: 주행 모드(2창, DO 승인 시)</h2><div class="fit" data-w="1440" data-h="720"><iframe title="9b. 여정 중 화면: 주행 모드(2창, DO 승인 시)" width="1440" height="720" srcdoc="&lt;!doctype html&gt;
+&lt;html lang=&quot;ko&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;title&gt;여정 중 화면 주행 모드&lt;/title&gt;
+
+&lt;/head&gt;
+&lt;body&gt;
+
+
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&amp;display=swap&quot;&gt;
+&lt;style&gt;
+body{margin:0}
+a{color:#5FD4E0}a:hover{color:#A8EEF5}
+.ep{display:flex;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid #1E2C46}
+.ic{width:34px;height:34px;border-radius:10px;background:#1B2D4F;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+&lt;/style&gt;
+
+&lt;div style=&quot;width: 1440px; height: 720px; box-sizing: border-box; background: #05080F; font-family: &#x27;Noto Sans KR&#x27;, sans-serif; color: #F6F3EC; display: flex; position: relative&quot;&gt;
+&lt;div style=&quot;width: 900px; height: 720px; box-sizing: border-box; background: #1A2333; position: relative; overflow: hidden&quot;&gt;
+&lt;svg width=&quot;900&quot; height=&quot;720&quot; viewBox=&quot;0 0 900 720&quot; aria-hidden=&quot;true&quot;&gt;&lt;g stroke=&quot;#2A364A&quot; stroke-width=&quot;22&quot; fill=&quot;none&quot; stroke-linecap=&quot;round&quot;&gt;&lt;path d=&quot;M-20 520 L300 470 L520 300 L920 160&quot;/&gt;&lt;path d=&quot;M180 -20 L260 740&quot;/&gt;&lt;path d=&quot;M600 -20 L700 740&quot;/&gt;&lt;/g&gt;&lt;path d=&quot;M300 470 L520 300 L920 160&quot; stroke=&quot;#4C8DF6&quot; stroke-width=&quot;12&quot; fill=&quot;none&quot; stroke-linecap=&quot;round&quot;/&gt;&lt;circle cx=&quot;380&quot; cy=&quot;410&quot; r=&quot;14&quot; fill=&quot;#F6F3EC&quot; stroke=&quot;#4C8DF6&quot; stroke-width=&quot;5&quot;/&gt;&lt;/svg&gt;
+&lt;div style=&quot;position: absolute; left: 28px; top: 24px; background: #0F1726; border-radius: 18px; padding: 14px 18px; display: flex; gap: 14px; align-items: center&quot;&gt;&lt;span style=&quot;font-size: 34px; font-weight: 900&quot;&gt;↱&lt;/span&gt;&lt;div style=&quot;display: flex; flex-direction: column&quot;&gt;&lt;span style=&quot;font-size: 26px; font-weight: 900&quot;&gt;1.2km&lt;/span&gt;&lt;span style=&quot;font-size: 15px; color: #B9C4D6&quot;&gt;강릉 방면&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;span style=&quot;position: absolute; left: 28px; bottom: 24px; font-size: 14px; color: #8C99B0&quot;&gt;내비(Pleos 기본 내비) · 시안용 자리 표시&lt;/span&gt;
+&lt;/div&gt;
+&lt;div style=&quot;flex: 1; height: 720px; box-sizing: border-box; padding: 28px 30px; border-left: 2px solid #0B1424; display: flex; flex-direction: column; align-items: center; gap: 18px&quot;&gt;
+&lt;span style=&quot;align-self: flex-start; font-size: 14px; font-weight: 700; color: #071019; background: #5FD4E0; border-radius: 999px; padding: 5px 12px&quot;&gt;Car Buddy · 주행 중&lt;/span&gt;
+&lt;div style=&quot;margin-top: 18px&quot;&gt;&lt;svg role=&quot;img&quot; aria-label=&quot;웃는 버디&quot; width=&quot;120&quot; height=&quot;120&quot; viewBox=&quot;0 0 84 84&quot;&gt;&lt;ellipse cx=&quot;42&quot; cy=&quot;48&quot; rx=&quot;32&quot; ry=&quot;30&quot; fill=&quot;#F6F3EC&quot;/&gt;&lt;circle cx=&quot;32&quot; cy=&quot;44&quot; r=&quot;4&quot; fill=&quot;#12203A&quot;/&gt;&lt;circle cx=&quot;52&quot; cy=&quot;44&quot; r=&quot;4&quot; fill=&quot;#12203A&quot;/&gt;&lt;path d=&quot;M36 54 Q42 58 48 54&quot; stroke=&quot;#12203A&quot; stroke-width=&quot;2.5&quot; fill=&quot;none&quot; stroke-linecap=&quot;round&quot;/&gt;&lt;/svg&gt;&lt;/div&gt;
+&lt;span style=&quot;font-size: 30px; font-weight: 900&quot;&gt;에피소드 3개 기억 중&lt;/span&gt;
+&lt;div style=&quot;display: flex; gap: 10px; align-items: center; background: #0E1828; border-radius: 16px; padding: 12px 16px; max-width: 460px&quot;&gt;&lt;svg width=&quot;22&quot; height=&quot;22&quot; viewBox=&quot;0 0 20 20&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M4 18 V10 Q4 5 9 5 H15&quot; stroke=&quot;#5FD4E0&quot; stroke-width=&quot;2.4&quot; fill=&quot;none&quot; stroke-linecap=&quot;round&quot;/&gt;&lt;path d=&quot;M12 2 L16 5 L12 8&quot; stroke=&quot;#5FD4E0&quot; stroke-width=&quot;2.4&quot; fill=&quot;none&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;/&gt;&lt;/svg&gt;&lt;span style=&quot;font-size: 19px&quot;&gt;카페 대신 바다로 새는 중&lt;/span&gt;&lt;/div&gt;
+&lt;div style=&quot;flex: 1&quot;&gt;&lt;/div&gt;
+&lt;button style=&quot;width: 100%; height: 150px; border-radius: 28px; border: none; background: #F2A541; color: #12203A; font-family: &#x27;Noto Sans KR&#x27;, sans-serif; font-size: 32px; font-weight: 900&quot;&gt;지금 기억해&lt;/button&gt;
+&lt;span style=&quot;font-size: 13px; color: #8C99B0; text-align: center; line-height: 1.5&quot;&gt;DO 승인 시에만 · 애니메이션·스크롤·지도·목록 없음&lt;br&gt;미승인이면 이 자리에 시스템 차단 화면&lt;/span&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+
+&lt;/body&gt;
+&lt;/html&gt;
+"></iframe></div></section>
+<section><h2>9c. 중간 상영: 끝 장</h2><div class="fit" data-w="1440" data-h="720"><iframe title="9c. 중간 상영: 끝 장" width="1440" height="720" srcdoc="&lt;!doctype html&gt;
+&lt;html lang=&quot;ko&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;title&gt;중간 상영 끝 장&lt;/title&gt;
+
+&lt;/head&gt;
+&lt;body&gt;
+
+
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&amp;display=swap&quot;&gt;
+&lt;style&gt;
+body{margin:0}
+a{color:#5FD4E0}a:hover{color:#A8EEF5}
+.stp{flex:1;box-sizing:border-box;background:#0E1828;border:1px solid #1E2C46;border-radius:18px;padding:14px 16px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.sn{font-size:12px;font-weight:700;color:#8C99B0}
+.sh{font-size:18px;font-weight:700}
+.sd{font-size:13px;color:#B9C4D6}
+&lt;/style&gt;
+
+&lt;div style=&quot;width: 1440px; height: 720px; box-sizing: border-box; padding: 36px 48px 44px; background: #071019; font-family: &#x27;Noto Sans KR&#x27;, sans-serif; color: #F6F3EC; display: flex; flex-direction: column; gap: 18px; position: relative; overflow: hidden&quot;&gt;
+&lt;div style=&quot;position: absolute; left: 0; bottom: 0; width: 1440px; height: 6px; background: #5FD4E0; box-shadow: 0 0 40px 10px rgba(95,212,224,0.55)&quot;&gt;&lt;/div&gt;
+
+&lt;div style=&quot;display: flex; justify-content: space-between; align-items: center&quot;&gt;
+&lt;span style=&quot;font-size: 15px; font-weight: 700; color: #071019; background: #5FD4E0; border-radius: 999px; padding: 6px 14px&quot;&gt;지금까지&lt;/span&gt;
+&lt;span style=&quot;font-size: 15px; color: #8C99B0&quot;&gt;닫기 ✕&lt;/span&gt;
+&lt;/div&gt;
+&lt;div style=&quot;display: flex; gap: 8px&quot;&gt;
+&lt;span style=&quot;flex: 1; height: 6px; border-radius: 3px; background: #F6F3EC&quot;&gt;&lt;/span&gt;
+&lt;span style=&quot;flex: 1; height: 6px; border-radius: 3px; background: #F6F3EC&quot;&gt;&lt;/span&gt;
+&lt;span style=&quot;flex: 1; height: 6px; border-radius: 3px; background: #F6F3EC&quot;&gt;&lt;/span&gt;
+&lt;span style=&quot;flex: 1; height: 6px; border-radius: 3px; background: linear-gradient(90deg, #F6F3EC 60%, rgba(246,243,236,0.25) 60%)&quot;&gt;&lt;/span&gt;
+&lt;/div&gt;
+
+&lt;div style=&quot;display: flex; gap: 14px; margin-top: 6px&quot;&gt;
+&lt;div class=&quot;stp&quot;&gt;&lt;span class=&quot;sn&quot;&gt;1 · 4초&lt;/span&gt;&lt;span class=&quot;sh&quot;&gt;지금까지의 길&lt;/span&gt;&lt;span class=&quot;sd&quot;&gt;서울 → 지금 여기, 128km&lt;/span&gt;&lt;/div&gt;
+&lt;div class=&quot;stp&quot;&gt;&lt;span class=&quot;sn&quot;&gt;2 · 5초&lt;/span&gt;&lt;span class=&quot;sh&quot;&gt;정체 35분&lt;/span&gt;&lt;span class=&quot;sd&quot;&gt;35분 거북이. 다 같이 버팀.&lt;/span&gt;&lt;/div&gt;
+&lt;div class=&quot;stp&quot;&gt;&lt;span class=&quot;sn&quot;&gt;3 · 5초&lt;/span&gt;&lt;span class=&quot;sh&quot;&gt;19도 vs 26도&lt;/span&gt;&lt;span class=&quot;sd&quot;&gt;오늘의 온도 전쟁.&lt;/span&gt;&lt;/div&gt;
+&lt;div class=&quot;stp&quot; style=&quot;border-color: #5FD4E0&quot;&gt;&lt;span class=&quot;sn&quot; style=&quot;color: #5FD4E0&quot;&gt;4 · 지금 이 장&lt;/span&gt;&lt;span class=&quot;sh&quot;&gt;여기까지가 전반전&lt;/span&gt;&lt;span class=&quot;sd&quot;&gt;영수증과 시상식은 도착해서&lt;/span&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div style=&quot;flex: 1; display: flex; gap: 40px; align-items: center; padding: 0 24px&quot;&gt;
+&lt;svg role=&quot;img&quot; aria-label=&quot;웃는 버디&quot; width=&quot;170&quot; height=&quot;170&quot; viewBox=&quot;0 0 84 84&quot; style=&quot;flex-shrink: 0&quot;&gt;&lt;ellipse cx=&quot;42&quot; cy=&quot;48&quot; rx=&quot;32&quot; ry=&quot;30&quot; fill=&quot;#F6F3EC&quot;/&gt;&lt;circle cx=&quot;32&quot; cy=&quot;44&quot; r=&quot;4&quot; fill=&quot;#12203A&quot;/&gt;&lt;circle cx=&quot;52&quot; cy=&quot;44&quot; r=&quot;4&quot; fill=&quot;#12203A&quot;/&gt;&lt;path d=&quot;M34 54 Q42 61 50 54&quot; stroke=&quot;#12203A&quot; stroke-width=&quot;2.5&quot; fill=&quot;none&quot; stroke-linecap=&quot;round&quot;/&gt;&lt;/svg&gt;
+&lt;div style=&quot;display: flex; flex-direction: column; gap: 14px&quot;&gt;
+&lt;h1 style=&quot;margin: 0; font-size: 52px; font-weight: 900; line-height: 1.2&quot;&gt;여기까지가 전반전이야.&lt;/h1&gt;
+&lt;span style=&quot;font-size: 22px; color: #B9C4D6&quot;&gt;아직 2시간 10분 남았어. 나머지는 도착해서 보여 줄게.&lt;/span&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;button style=&quot;height: 68px; border-radius: 20px; border: none; background: #5FD4E0; color: #071019; font-family: &#x27;Noto Sans KR&#x27;, sans-serif; font-size: 21px; font-weight: 700&quot;&gt;출발하자&lt;/button&gt;
+&lt;p style=&quot;margin: 0; font-size: 14px; color: #8C99B0&quot;&gt;중간 상영 · [보기]를 눌렀을 때만 · 20초 안쪽 · 이야깃거리가 큰 에피소드 2장만 · 6초 뒤 저절로 닫히고, 기어를 D에 넣으면 바로 닫힘&lt;/p&gt;
+&lt;/div&gt;
+
+
+&lt;/body&gt;
+&lt;/html&gt;
+"></iframe></div></section>
+<script>
+function fit(){document.querySelectorAll('.fit').forEach(function(d){var w=+d.dataset.w,h=+d.dataset.h,s=Math.min(1,(document.body.clientWidth)/w);d.style.width=(w*s)+'px';d.style.height=(h*s)+'px';d.firstChild.style.transform='scale('+s+')';});}
+fit();addEventListener('resize',fit);
+</script>
+</body>
+</html>
