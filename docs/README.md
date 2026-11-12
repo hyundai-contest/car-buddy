@@ -6,7 +6,8 @@
 
 | 문서 | 내용 | 언제 보나 |
 | --- | --- | --- |
-| [PLAN_v15.md](PLAN_v15.md) | 기획안 최신본(제출본). 차량 특화 요소, 에피소드 15종, 시나리오, SDK 사용 현황, 일정 | 무엇을 왜 만드는지 |
+| [SUBMISSION_02.md](SUBMISSION_02.md) | 공모전 02 양식에 그대로 옮기는 제출용 요약본(1번은 한 문장) | 접수 양식을 채울 때 |
+| [PLAN_v16.md](PLAN_v16.md) | 기획안 상세본(02 양식 7개 항목 순서). 심사위원 체험 방법, 차량 특화 요소, 에피소드 15종, 시나리오, SDK 사용 현황, 일정 | 무엇을 왜 만드는지 |
 | [design/card_mockup.html](design/card_mockup.html) | 카드·화면 시안 13장. 브라우저로 열면 됨 | 화면이 어떻게 생겼는지 |
 | [IMPLEMENTATION_NOTES.md](IMPLEMENTATION_NOTES.md) | 구현하면서 정한 세부 결정, 스펙과 다르게 간 부분, 아직 안 한 것 | 코드가 왜 이렇게 됐는지 |
 | [CHECKLIST.md](CHECKLIST.md) | 진행 기록과 남은 일(1차 11/15, PT 12/3) | 어디까지 됐는지 |
@@ -35,6 +36,6 @@
 
 ## 원본이 다른 곳에 있는 문서
 
-- 기획안: [Claude Doc](https://claude.ai/artifact/LtUyhvQQgsBVwHA91DaE7H#271197d0-08af)의 '기획안 v15 (제출본)' 탭. `PLAN_v15.md`는 그 탭을 내보낸 사본입니다. 이전 버전(v8~v13)은 같은 문서의 다른 탭에 남아 있습니다.
+- 기획안: [Claude Doc](https://claude.ai/artifact/LtUyhvQQgsBVwHA91DaE7H#963e70c7-2498)의 '기획안 v16 (상세본)' 탭(제출용 요약은 '제출용 (02 양식)' 탭, 사본 `SUBMISSION_02.md`). `PLAN_v16.md`는 그 탭을 내보낸 사본입니다. 이전 버전(v8~v15)은 같은 문서의 다른 탭에 남아 있습니다.
 - 시안: [디자인 캔버스](https://claude.ai/artifact/Buj2Z1T5WTQ4Ngim6rQWPx). `design/card_mockup.html`은 캔버스의 아트보드를 한 페이지로 모은 사본입니다.
 - 체크리스트: [Claude Doc](https://claude.ai/artifact/YX6WaKsncj2wg7Zs9Uk6u3). `CHECKLIST.md`는 사본입니다.
