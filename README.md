@@ -10,8 +10,10 @@
 | 대상 | Pleos Connect(Android Automotive) 차량용 앱 |
 | APK | [`apk/CarBuddy_release.apk`](apk/CarBuddy_release.apk) |
 | 시연 영상 | [`docs/video/CarBuddy_demo.mp4`](docs/video/CarBuddy_demo.mp4) (1분 47초, 에뮬레이터 화면 녹화) |
-| 기획안 | [`docs/PLAN_v14.md`](docs/PLAN_v14.md) |
+| 기획안 | [`docs/PLAN_v15.md`](docs/PLAN_v15.md) |
 | 문서 안내 | [`docs/README.md`](docs/README.md) |
+
+비슷한 방향의 다른 출품작과의 차이: [docs/COMPETITORS.md](docs/COMPETITORS.md)
 
 ## APK 파일 위치
 
@@ -78,7 +80,7 @@ adb forward tcp:8088 tcp:8088         # Virtual Console: http://127.0.0.1:8088/
 
 - 에뮬레이터를 재부팅하면 `adb forward`를 다시 설정합니다.
 - TTS 소리를 들으려면 에뮬레이터를 `-no-audio` 없이 띄워야 합니다. 에뮬레이터에는 기본 TTS 엔진이 없어 실제 소리는 확인하지 못했습니다(실차 확인 필요).
-- 에뮬레이터에서만 다른 점: 착석 값이 반대로 와서 앱이 뒤집어 읽고, 콘솔에 운전석 벨트 조작이 없어 벨트·위치 궤적·내비 도착 이벤트는 주행 로그 재생(모의 데이터)으로 시험했습니다. 구분은 [`docs/PLAN_v14.md`](docs/PLAN_v14.md)의 '구현한 부분과 모의 데이터로 대체한 부분', 자세한 값은 [`docs/signals_phase0.md`](docs/signals_phase0.md).
+- 에뮬레이터에서만 다른 점: 착석 값이 반대로 와서 앱이 뒤집어 읽고, 콘솔에 운전석 벨트 조작이 없어 벨트·위치 궤적·내비 도착 이벤트는 주행 로그 재생(모의 데이터)으로 시험했습니다. 구분은 [`docs/PLAN_v15.md`](docs/PLAN_v15.md)의 '구현한 부분과 모의 데이터로 대체한 부분', 자세한 값은 [`docs/signals_phase0.md`](docs/signals_phase0.md).
 
 ## 개발에 사용한 에뮬레이터와 화면 규격
 
