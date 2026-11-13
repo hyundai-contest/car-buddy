@@ -30,6 +30,7 @@ import ai.carbuddy.ui.Notifier
 import ai.carbuddy.voice.AndroidSpeakConditions
 import ai.carbuddy.voice.AndroidTtsPort
 import ai.carbuddy.voice.PleosTtsPort
+import ai.carbuddy.voice.PrerollTtsPort
 import ai.carbuddy.voice.ArrivalRecap
 import ai.carbuddy.voice.SafetyGate
 import ai.carbuddy.voice.SpeakPurpose
@@ -56,7 +57,8 @@ object AppModule {
     @Provides @Singleton fun copy(@ApplicationContext c: Context): CopyBook = ResCopyBook(c)
     @Provides @Singleton fun cities(): CityResolver = OfflineCityResolver()
     @Provides @Singleton fun capabilities(): CapabilityRegistry = CapabilityRegistry()
-    @Provides @Singleton fun tts(@ApplicationContext c: Context): TtsPort = PleosTtsPort(c) { AndroidTtsPort(c) }
+    @Provides @Singleton fun tts(@ApplicationContext c: Context): TtsPort =
+        PrerollTtsPort(PleosTtsPort(c) { AndroidTtsPort(c) })
     @Provides @Singleton fun notifier(@ApplicationContext c: Context, copy: CopyBook) = Notifier(c, copy)
 
     @Provides @Singleton fun pleosVehicle(@ApplicationContext c: Context) = PleosVehicle(c)
