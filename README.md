@@ -42,7 +42,7 @@
 준비물: Android Studio(AGP 9.5, Gradle 9.6, Kotlin 2.4, JDK 17), Pleos Connect 에뮬레이터.
 
 ```bash
-./gradlew :app:testDebugUnitTest      # 단위 테스트 (165개)
+./gradlew :app:testDebugUnitTest      # 단위 테스트 (171개)
 ./gradlew :app:assembleDebug          # 디버그 APK (개발자 패널·재생 포함)
 ./gradlew :app:assembleRelease        # 서명된 릴리스 APK (keystore.properties 필요)
 ```
