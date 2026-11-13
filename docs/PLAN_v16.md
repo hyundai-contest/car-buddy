@@ -299,7 +299,7 @@ Car Buddy가 먼저 화면을 띄우지는 않습니다. 먼저 묻는 것(중�
 
 개발자 패널이나 디버그 빌드 없이, 제출한 릴리스 APK만으로 핵심 흐름을 직접 보실 수 있도록 체험 모드를 넣었습니다.
 
-1. Pleos Connect 에뮬레이터(v2.1.0)를 켜고 APK를 앱 사용자(user 10)에 설치합니다: `adb install -r --user 10 apk/CarBuddy_release.apk`
+1. Pleos Connect 에뮬레이터(v2.1.0)를 켜고 APK를 앱 사용자(user 10)에 설치합니다: `adb install -r --user 10 apk/성원이와아이들_CarBuddy_release.apk`
 2. Car Buddy를 열어 첫 화면에서 동의 → 위치·차량 신호 권한 허용 → 버디 이름을 정합니다.
 3. 홈에서 **설정 › 체험 모드 › [주말 여행 (서울→강릉)]**을 누릅니다. 4시간 주행이 약 2분에 흐르며 넷이 함께 출발, 정체, 휴게소, 목적지 변경, 뺑뺑이, 소나기가 차례로 쌓이고, 도착하면 상영회(오늘의 길 → 에피소드 → 여정 영수증 → 시상식)가 열립니다.
 4. 이어서 **[퇴근길 (목적지 없음)]**을 누르면 내비 목적지 없이 혼자 달린 날이 시간 내역 영수증이 붙은 카드로 정리되는 흐름을 볼 수 있습니다.
@@ -384,7 +384,7 @@ Car Buddy가 먼저 화면을 띄우지는 않습니다. 먼저 묻는 것(중�
 | 자료 | 위치 |
 | --- | --- |
 | GitHub 저장소(소스 코드) | https://github.com/hyundai-contest/car-buddy |
-| 설치 파일(릴리스 APK, 서명됨) | 저장소 `apk/CarBuddy_release.apk` |
+| 설치 파일(릴리스 APK, 서명됨) | 저장소 `apk/성원이와아이들_CarBuddy_release.apk` |
 | 시연 영상(1분 47초, 에뮬레이터 화면 녹화) | 저장소 `docs/video/CarBuddy_demo.mp4` |
 | 카드 화면 시안 | 저장소 `docs/design/card_mockup.html` |
 | 심사위원 체험 방법 | 5장 '심사위원 체험 방법'(제출 APK의 설정 › 체험 모드) |

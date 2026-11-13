@@ -8,15 +8,15 @@
 | --- | --- |
 | 앱 이름 | Car Buddy (패키지 `ai.carbuddy`, 버전 0.1.0) |
 | 대상 | Pleos Connect(Android Automotive) 차량용 앱 |
-| APK | [`apk/CarBuddy_release.apk`](apk/CarBuddy_release.apk) |
+| APK | [`apk/성원이와아이들_CarBuddy_release.apk`](apk/%EC%84%B1%EC%9B%90%EC%9D%B4%EC%99%80%EC%95%84%EC%9D%B4%EB%93%A4_CarBuddy_release.apk) |
 | 시연 영상 | [`docs/video/CarBuddy_demo.mp4`](docs/video/CarBuddy_demo.mp4) (1분 47초, 에뮬레이터 화면 녹화) |
 | 기획안 | [`docs/PLAN_v16.md`](docs/PLAN_v16.md) |
 | 문서 안내 | [`docs/README.md`](docs/README.md) |
 
 ## APK 파일 위치
 
-- 저장소 안: **`apk/CarBuddy_release.apk`** (서명된 릴리스 빌드, 약 27.6 MB)
-- 바로 받기: https://github.com/hyundai-contest/car-buddy/blob/main/apk/CarBuddy_release.apk
+- 저장소 안: **`apk/성원이와아이들_CarBuddy_release.apk`** (서명된 릴리스 빌드, 약 27.6 MB)
+- 바로 받기: https://github.com/hyundai-contest/car-buddy/blob/main/apk/%EC%84%B1%EC%9B%90%EC%9D%B4%EC%99%80%EC%95%84%EC%9D%B4%EB%93%A4_CarBuddy_release.apk
 - GitHub Release는 따로 만들지 않았습니다. 최신 APK는 항상 위 경로에 있습니다.
 - SHA-256: `d52c662e7c10c1137a50cc1dc848a529d22798aba944682e554dc6f5ba3b9bd4`
 - 서명 인증서: `CN=Car Buddy, O=Car Buddy, C=KR`
@@ -29,7 +29,7 @@
 2. APK를 **user 10**에 설치합니다(에뮬레이터에서 앱 사용자는 10입니다).
 
    ```bash
-   adb install -r --user 10 apk/CarBuddy_release.apk
+   adb install -r --user 10 apk/성원이와아이들_CarBuddy_release.apk
    ```
 
 3. 앱 목록에서 **Car Buddy**를 실행합니다. 첫 실행 화면에서 동의 → 위치·차량 신호 권한 → 버디 이름을 정하면 홈이 열립니다.
