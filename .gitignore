@@ -23,3 +23,12 @@ local.properties
 
 /.idea
 __pycache__/
+
+# internal docs (not published)
+/docs/SPEC.md
+/docs/SUBMISSION_02.md
+/docs/UX_SPEC.md
+/docs/VIDEO.md
+/docs/IMPLEMENTATION_NOTES.md
+/docs/CHECKLIST.md
+/docs/NEXT_DESIGN.md
