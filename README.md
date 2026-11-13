@@ -52,7 +52,7 @@ adb install -r --user 10 app/build/outputs/apk/debug/app-debug.apk
 adb forward tcp:8088 tcp:8088         # Virtual Console: http://127.0.0.1:8088/
 ```
 
-앱 안에서 보는 순서: 홈 왼쪽 아래 **DEV** → 재생 패널에서 `scenario_a`(서울 → 강릉) 선택 → 60×로 재생. 휴게소에서 다시 벨트를 매면 버디가 "쉬는 동안 지금까지 볼래?"라고 묻고, 도착하면 상영회가 열립니다. 자세한 시연 순서는 [`docs/VIDEO.md`](docs/VIDEO.md).
+앱 안에서 보는 순서: 홈 왼쪽 아래 **DEV** → 재생 패널에서 `scenario_a`(서울 → 강릉) 선택 → 60×로 재생. 휴게소에서 다시 벨트를 매면 버디가 "쉬는 동안 지금까지 볼래?"라고 묻고, 도착하면 상영회가 열립니다. 심사위원용 체험 방법은 [`docs/PLAN_v16.md`](docs/PLAN_v16.md) 5장, 시연 영상은 [`docs/video/CarBuddy_demo.mp4`](docs/video/CarBuddy_demo.mp4).
 
 ## 테스트 환경 및 필요한 설정
 

@@ -1,28 +1,16 @@
 # Car Buddy 문서 안내
 
-2026-11-12 기준. 처음이라면 위에서부터 읽으면 됩니다.
+2026-11-13 기준. 처음이라면 위에서부터 읽으면 됩니다.
 
-## 지금 기준이 되는 문서
+## 저장소에 있는 문서
 
 | 문서 | 내용 | 언제 보나 |
 | --- | --- | --- |
-| [SUBMISSION_02.md](SUBMISSION_02.md) | 공모전 02 양식에 그대로 옮기는 제출용 요약본(1번은 한 문장) | 접수 양식을 채울 때 |
-| [PLAN_v16.md](PLAN_v16.md) | 기획안 상세본(02 양식 7개 항목 순서). 심사위원 체험 방법, 차량 특화 요소, 에피소드 15종, 시나리오, SDK 사용 현황, 일정 | 무엇을 왜 만드는지 |
+| [PLAN_v16.md](PLAN_v16.md) | 기획안 상세본(공모전 02 양식 7개 항목 순서). 심사위원 체험 방법, 차량 특화 요소, 에피소드 14종, 시나리오, SDK 사용 현황, Pleos 심사 가이드 반영(11/13), 일정 | 무엇을 왜 만드는지 |
+| [E2E.md](E2E.md) | 실사용 흐름: 출발, 목적지 없는 날, 도착, 다음 탑승 | 실제 쓰이는 순서 |
 | [design/card_mockup.html](design/card_mockup.html) | 카드·화면 시안 13장. 브라우저로 열면 됨 | 화면이 어떻게 생겼는지 |
-| [IMPLEMENTATION_NOTES.md](IMPLEMENTATION_NOTES.md) | 구현하면서 정한 세부 결정, 스펙과 다르게 간 부분, 아직 안 한 것 | 코드가 왜 이렇게 됐는지 |
-| [CHECKLIST.md](CHECKLIST.md) | 진행 기록과 남은 일(1차 11/15, PT 12/3) | 어디까지 됐는지 |
-| [NEXT_DESIGN.md](NEXT_DESIGN.md) | 개선 설계. N1~N3 구현됨, N4~N7이 PT까지 할 일 | 다음에 무엇을 만드는지 |
-| [VIDEO.md](VIDEO.md) | 1분 30초 시연 영상 촬영 순서 | 영상 찍을 때 |
-
-## 설계 문서 (11/12 개정, v2)
-
-서버·동승자 폰 참여·음성 클립은 로드맵으로 내리고, 여정 끝 판정·알림·중간 상영·배웅·장면별 앰비언트를 반영했습니다. 내용이 서로 다르면 위 표의 문서가 우선입니다.
-
-| 문서 | 내용 |
-| --- | --- |
-| [SPEC.md](SPEC.md) | 개발 설계서 v2: 신호 계층, 여정 상태 머신과 시동 OFF 복구, 감지기 명세, 영수증 계산, 카드 데이터 |
-| [UX_SPEC.md](UX_SPEC.md) | 화면·흐름·문구 명세 v2: 화면별 가로·세로 배치, 알림, 문구 키 |
-| [E2E.md](E2E.md) | 실사용 흐름 v2: 출발, 목적지 없는 날, 도착, 다음 탑승 |
+| [video/CarBuddy_demo.mp4](video/CarBuddy_demo.mp4) | 시연 영상(1분 47초, 에뮬레이터 화면 녹화). 직접 조작한 실제 구현과 주행 로그 재생(모의 데이터)을 자막으로 구분 | 동작을 눈으로 볼 때 |
+| [video/narration_script.txt](video/narration_script.txt) | 시연 영상 내레이션 | 영상 내용 확인 |
 
 ## 참고 자료
 
@@ -33,9 +21,3 @@
 | [replay/commute_b.jsonl](replay/commute_b.jsonl) | 주행 재생 로그: 평일 퇴근, 목적지 없음 |
 
 재생 로그는 테스트 픽스처이자 앱 assets라 파일 이름과 위치를 바꾸면 안 됩니다. 생성 스크립트는 저장소의 `tools/`에 있습니다.
-
-## 원본이 다른 곳에 있는 문서
-
-- 기획안: [Claude Doc](https://claude.ai/artifact/LtUyhvQQgsBVwHA91DaE7H#963e70c7-2498)의 '기획안 v16 (상세본)' 탭(제출용 요약은 '제출용 (02 양식)' 탭, 사본 `SUBMISSION_02.md`). `PLAN_v16.md`는 그 탭을 내보낸 사본입니다. 이전 버전(v8~v15)은 같은 문서의 다른 탭에 남아 있습니다.
-- 시안: [디자인 캔버스](https://claude.ai/artifact/Buj2Z1T5WTQ4Ngim6rQWPx). `design/card_mockup.html`은 캔버스의 아트보드를 한 페이지로 모은 사본입니다.
-- 체크리스트: [Claude Doc](https://claude.ai/artifact/YX6WaKsncj2wg7Zs9Uk6u3). `CHECKLIST.md`는 사본입니다.
